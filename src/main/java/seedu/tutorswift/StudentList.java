@@ -3,7 +3,7 @@ package seedu.tutorswift;
 import java.util.ArrayList;
 
 /**
- * Provides methods for operations (e.g. add, delete, and get tasks) handling
+ * Provides methods for operations (e.g. add, delete, and get student) handling
  * an <code>ArrayList</code> of <code>Student</code> objects.
  */
 public class StudentList {
