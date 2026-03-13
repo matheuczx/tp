@@ -1,4 +1,4 @@
-package seedu.duke;
+package seedu.tutorswift;
 
 /**
  * Represents a student with a name, subject, and academic level.
@@ -28,6 +28,30 @@ public class Student {
 
     public String getAcademicLevel() {
         return academicLevel;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public void setAcademicLevel(String academicLevel) {
+        this.academicLevel = academicLevel;
+    }
+
+    public void editStudent(String name, String subject, String academicLevel) {
+        if (name != null) {
+            this.name = name;
+        }
+        if (subject != null) {
+            this.subject = subject;
+        }
+        if (academicLevel != null) {
+            this.academicLevel = academicLevel;
+        }
     }
 
 }

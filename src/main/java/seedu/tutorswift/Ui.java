@@ -1,4 +1,4 @@
-package seedu.duke;
+package seedu.tutorswift;
 
 import java.util.Scanner;
 
@@ -35,6 +35,24 @@ public class Ui {
         } else {
             return "";
         }
+    }
+
+    /**
+     * Shows that edit was successful and show updated student details.
+     *
+     * @param updatedStudent The student that was just edited.
+     */
+    public void showEditSuccess(Student updatedStudent) {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Done! I've updated the details for this student:");
+        System.out.println("   " + updatedStudent.getName() + " | " +
+                updatedStudent.getAcademicLevel() + " | " +
+                updatedStudent.getSubject());
+        System.out.println("____________________________________________________________");
+    }
+
+    public void showError(String error) {
+        System.out.println(error);
     }
 
     /**
