@@ -1,4 +1,4 @@
-package seedu.duke;
+package seedu.tutorswift;
 
 /**
  * Represents a student with a name, subject, and academic level.

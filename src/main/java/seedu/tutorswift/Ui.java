@@ -1,4 +1,4 @@
-package seedu.duke;
+package seedu.tutorswift;
 
 import java.util.Scanner;
 

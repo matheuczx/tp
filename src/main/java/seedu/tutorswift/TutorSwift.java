@@ -1,8 +1,8 @@
-package seedu.duke;
+package seedu.tutorswift;
 
-public class Duke {
+public class TutorSwift {
     /**
-     * Main entry-point for the java.duke.Duke application.
+     * Main entry-point for the TutorSwift application.
      */
     public static void main(String[] args) {
         Ui ui = new Ui();
