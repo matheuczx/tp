@@ -8,4 +8,14 @@ Hello from
                        `---'
 
 Welcome to TutorSwift! Manage your students efficiently.How can I help you?
+____________________________________________________________
+ Got it. I've added this student:
+   Alex Tan | Secondary 3 | Mathematics
+ Now you have 1 students in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this student:
+   Brenda Lim | Primary 6 | English
+ Now you have 2 students in the list.
+____________________________________________________________
 Goodbye! Thanks for using TutorSwift.
