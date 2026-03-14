@@ -25,11 +25,11 @@ public class TutorSwift {
                 Command c = Parser.parseUserInput(userInput);
                 c.execute(students, ui);
                 isExit = c.isExit();
-                ui.close();
             } catch (TutorSwiftException e) {
                 ui.showError(e.getMessage());
             }
         }
+        ui.close();
 
     }
 
