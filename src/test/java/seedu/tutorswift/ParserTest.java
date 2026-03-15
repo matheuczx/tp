@@ -3,7 +3,6 @@ package seedu.tutorswift;
 import org.junit.jupiter.api.Test;
 import seedu.tutorswift.command.Command;
 import seedu.tutorswift.command.DeleteCommand;
-import seedu.tutorswift.command.ListCommand;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
