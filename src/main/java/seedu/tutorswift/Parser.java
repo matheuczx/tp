@@ -30,7 +30,7 @@ public class Parser {
         case "delete":
             return parseDelete(arguments);
         case "list":
-            return parseList();
+            return new ListCommand();
         case "bye":
             return new ExitCommand();
         default:
@@ -121,12 +121,4 @@ public class Parser {
         return new DeleteCommand(index);
     }
 
-    /**
-     * Parses arguments in the context of the list students command.
-     *
-     * @return A {@code ListCommand} to list all students.
-     */
-    private static Command parseList() {
-        return new ListCommand();
-    }
 }
