@@ -17,6 +17,10 @@ public class StudentList {
         this.students.add(studentToAdd);
     }
 
+    public void deleteStudent(int studentId) {
+        this.students.remove(studentId);
+    }
+
     public Student getStudent(int studentId) {
         return this.students.get(studentId);
     }

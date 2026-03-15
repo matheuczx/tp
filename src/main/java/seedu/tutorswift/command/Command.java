@@ -2,10 +2,11 @@ package seedu.tutorswift.command;
 
 import seedu.tutorswift.StudentList;
 import seedu.tutorswift.Ui;
+import seedu.tutorswift.TutorSwiftException;
 
 public abstract class Command {
 
-    public abstract void execute(StudentList students, Ui ui);
+    public abstract void execute(StudentList students, Ui ui) throws TutorSwiftException;
 
     /**
      * Indicates whether the application should terminate after this command.
