@@ -56,6 +56,21 @@ public class Ui {
     }
 
     /**
+     * Shows a success message and the student's details after a student is successfully added.
+     *
+     * @param student The student object that was recently added.
+     * @param totalStudents The total number of students currently in the list.
+     */
+    public void showAddSuccess(Student student, int totalStudents) {
+        System.out.println("____________________________________________________________");
+        System.out.println(" Got it. I've added this student:");
+        System.out.println("   " + student.getName() + " | " +
+                student.getAcademicLevel() + " | " +
+                student.getSubject());
+        System.out.println(" Now you have " + totalStudents + " students in the list.");
+        System.out.println("____________________________________________________________");
+    }
+    /**
      * Shows that deletion was successful and shows the removed student details.
      *
      * @param deletedStudent The student that was just deleted.

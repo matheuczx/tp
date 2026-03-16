@@ -30,6 +30,7 @@ public class TutorSwift {
             }
         }
         ui.close();
+
     }
 
     public static void main(String[] args) {

@@ -1,1 +1,3 @@
+add n/Alex Tan l/Secondary 3 s/Mathematics
+add n/Brenda Lim l/Primary 6 s/English
 bye
