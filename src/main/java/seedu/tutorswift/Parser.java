@@ -96,7 +96,7 @@ public class Parser {
             throw new TutorSwiftException("Missing parameters! Usage: add n/NAME l/LEVEL s/SUBJECT");
         }
 
-        Student newStudent = new Student(name, subject, level);
+        Student newStudent = new Student(name, level, subject);
         return new AddCommand(newStudent);
     }
     private static String getValueByPrefix(String args, String prefix) {

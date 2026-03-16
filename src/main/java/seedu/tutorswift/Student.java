@@ -12,10 +12,10 @@ public class Student {
     /**
      * Creates a student with the given name, subject, and academic level.
      */
-    public Student(String name, String subject, String academicLevel) {
+    public Student(String name, String academicLevel, String subject) {
         this.name = name;
-        this.subject = subject;
         this.academicLevel = academicLevel;
+        this.subject = subject;
     }
 
     public String getName() {
@@ -42,15 +42,17 @@ public class Student {
         this.academicLevel = academicLevel;
     }
 
-    public void editStudent(String name, String subject, String academicLevel) {
+    public void editStudent(String name, String academicLevel, String subject) {
         if (name != null) {
             this.name = name;
         }
-        if (subject != null) {
-            this.subject = subject;
-        }
+
         if (academicLevel != null) {
             this.academicLevel = academicLevel;
+        }
+
+        if (subject != null) {
+            this.subject = subject;
         }
     }
 
