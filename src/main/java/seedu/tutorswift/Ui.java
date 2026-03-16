@@ -15,11 +15,12 @@ public class Ui {
             + "   //__.....----~~~~._\\ | /_.~~~~----.....__\\\\\n"
             + "  ======================\\\\|//====================\n"
             + "                       `---'\n";
-    private static final String WELCOME_MESSAGE = "Welcome to TutorSwift! We'll help you manage your students efficiently!\n"
+    private static final String WELCOME_MESSAGE = "Welcome to TutorSwift!"
+            + " We'll help you manage your students efficiently!\n"
             + "How can I help you?";
     private static final String LINE_DIVIDER = "____________________________________________________________";
+    private static final String INDENT = "    ";
     private static final String EXIT_MESSAGE = "Goodbye! Thanks for using TutorSwift.";
-    public static final String INDENT = "   ";
 
     private final Scanner scanner;
 
@@ -45,7 +46,7 @@ public class Ui {
     /**
      * Helper method to print formatted student details.
      *
-     * @param student The student object to print
+     * @param student The student object to print.
      */
     private void printStudentDetails(Student student) {
         assert student != null : "student should not be null";
