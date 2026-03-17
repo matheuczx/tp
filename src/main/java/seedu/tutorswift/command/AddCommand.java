@@ -16,6 +16,7 @@ public class AddCommand extends Command {
      * @param student The student to be added to the list.
      */
     public AddCommand(Student student) {
+        assert student != null : "AddCommand initialized with null student";
         this.studentToAdd = student;
     }
 
@@ -28,7 +29,12 @@ public class AddCommand extends Command {
      */
     @Override
     public void execute(StudentList students, Ui ui) {
+        assert students != null : "StudentList should not be null";
+        assert ui != null : "Ui should not be null";
+        int initialSize = students.getSize();
         students.addStudent(studentToAdd);
+
+        assert students.getSize() == initialSize + 1 : "List size should increase by 1";
         ui.showAddSuccess(studentToAdd, students.getSize());
     }
 }
