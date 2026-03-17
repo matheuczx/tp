@@ -102,6 +102,8 @@ public class Ui {
      * @param students The list of students to display.
      */
     public void showStudentList(StudentList students) {
+        assert students != null : "StudentList cannot be null";
+
         System.out.println(LINE_DIVIDER);
 
         if (students.getSize() == 0) {
@@ -110,8 +112,8 @@ public class Ui {
             System.out.println("Here are the students in your list:");
             for (int i = 0; i < students.getSize(); i++) {
                 Student student = students.getStudent(i);
-                System.out.print((i + 1) + ". ");
-                printStudentDetails(student);
+                assert student != null : "Student in list should never be null";
+                System.out.println((i + 1) + ". " + student);
             }
         }
 
