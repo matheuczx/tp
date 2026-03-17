@@ -1,8 +1,10 @@
-package seedu.tutorswift;
+package seedu.tutorswift.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seedu.tutorswift.command.AddCommand;
+import seedu.tutorswift.Student;
+import seedu.tutorswift.StudentList;
+import seedu.tutorswift.Ui;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
