@@ -9,8 +9,26 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 public class ParserTest {
+    @Test
+    public void showWelcome_printsCorrectMessage() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        Ui ui = new Ui();
+        ui.showWelcome();
+
+        String output = outContent.toString();
+
+        assertTrue(output.contains("Welcome to TutorSwift"));
+        assertTrue(output.contains("How can I help you?"));
+
+        ui.close();
+    }
+
     @Test
     public void parseUserInput_validDeleteIndex_returnsDeleteCommand() throws TutorSwiftException {
         Command result = Parser.parseUserInput("delete 1");
@@ -81,5 +99,17 @@ public class ParserTest {
         String input = "edit 1 n/  l/Sec 2";
         Command result = Parser.parseUserInput(input);
         assertInstanceOf(EditCommand.class, result);
+    }
+
+    @Test
+    public void parseUserInput_bye_returnsExitCommand() throws TutorSwiftException {
+        Command result = Parser.parseUserInput("bye");
+        assertInstanceOf(seedu.tutorswift.command.ExitCommand.class, result);
+    }
+
+    @Test
+    public void parseUserInput_byeCommand_isExitTrue() throws TutorSwiftException {
+        Command result = Parser.parseUserInput("bye");
+        assertTrue(result.isExit());
     }
 }

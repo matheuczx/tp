@@ -11,6 +11,9 @@ import seedu.tutorswift.Ui;
 public class ExitCommand extends Command {
     @Override
     public void execute(StudentList students, Ui ui){
+        assert ui != null : "Ui must not be null when executing ExitCommand";
+        assert students != null : "StudentList must not be null when executing ExitCommand";
+
         ui.showExit();
     }
 
