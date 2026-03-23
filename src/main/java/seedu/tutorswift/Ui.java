@@ -44,9 +44,9 @@ public class Ui {
     }
 
     /**
-     * Helper method to print formatted student details.
+     * Prints formatted details for the specified student.
      *
-     * @param student The student object to print.
+     * @param student The student whose details are to be printed.
      */
     private void printStudentDetails(Student student) {
         assert student != null : "student should not be null";
