@@ -122,6 +122,28 @@ public class Ui {
     }
 
     /**
+     * Displays students that match the find criteria.
+     *
+     * @param results A list of students that match the search filters.
+     */
+    public void showFindResults(java.util.ArrayList<Student> results) {
+        assert results != null : "Results list cannot be null";
+
+        System.out.println(LINE_DIVIDER);
+
+        if (results.isEmpty()) {
+            System.out.println("No matching students found.");
+        } else {
+            System.out.println("Here are the matching students:");
+            for (int i = 0; i < results.size(); i++) {
+                System.out.println((i + 1) + ". " + results.get(i));
+            }
+        }
+
+        System.out.println(LINE_DIVIDER);
+    }
+
+    /**
      * Shows the exit message when the program ends.
      */
     public void showExit() {
