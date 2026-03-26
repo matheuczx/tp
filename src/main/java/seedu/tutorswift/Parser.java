@@ -188,7 +188,7 @@ public class Parser {
         String subject = getValueByPrefix(args, PREFIX_SUBJECT);
 
         if (name == null && subject == null && level == null) {
-            throw new TutorSwiftException("Please provide at least one search field (n/ (name), s/ (subject), l/ (level)).");
+            throw new TutorSwiftException("Please provide at least one search field (n/(name), s/(subject), l/(lvl).");
         }
 
         return new FindCommand(name, subject, level);
