@@ -24,7 +24,19 @@ public class FindCommand extends Command {
     private final String subject;
     private final String level;
 
-    public FindCommand(String name, String subject, String level) {
+    public FindCommand(String name, String subject, String level) throws TutorSwiftException {
+        // Remove leading/trailing spaces
+        String trimmedName = (name == null) ? null : name.trim();
+        String trimmedSubject = (subject == null) ? null : subject.trim();
+        String trimmedLevel = (level == null) ? null : level.trim();
+
+        // If all fields are null or empty, throw exception
+        if ((trimmedName == null || trimmedName.isEmpty()) &&
+                (trimmedSubject == null || trimmedSubject.isEmpty()) &&
+                (trimmedLevel == null || trimmedLevel.isEmpty())) {
+            throw new TutorSwiftException("At least one search field must be provided.");
+        }
+
         this.name = name;
         this.subject = subject;
         this.level = level;
