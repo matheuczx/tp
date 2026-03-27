@@ -6,6 +6,7 @@ import seedu.tutorswift.command.ExitCommand;
 import seedu.tutorswift.command.DeleteCommand;
 import seedu.tutorswift.command.ListCommand;
 import seedu.tutorswift.command.AddCommand;
+import seedu.tutorswift.command.FindCommand;
 
 /**
  * This class contains the logic to interpret strings and return the
@@ -45,6 +46,8 @@ public class Parser {
             return new ExitCommand();
         case "add":
             return parseAdd(arguments);
+        case "find":
+            return parseFind(arguments);
         default:
             throw new TutorSwiftException("I'm sorry, but I don't know what '" + userInput + "' means :(\n");
         }
@@ -166,4 +169,28 @@ public class Parser {
         return new DeleteCommand(index);
     }
 
+    /**
+     * Parses arguments in the context of the find student command.
+     *
+     * @param args The raw user input following the "find" command word.
+     * @return A {@code FindCommand} containing the search criteria.
+     * @throws TutorSwiftException If no valid search prefixes are provided.
+     */
+    private static Command parseFind(String args) throws TutorSwiftException {
+        assert args != null : "Arguments should not be null";
+
+        if (args.isEmpty()) {
+            throw new TutorSwiftException("Find command requires at least one prefix (n/, s/, l/).");
+        }
+
+        String name = getValueByPrefix(args, PREFIX_NAME);
+        String level = getValueByPrefix(args, PREFIX_LEVEL);
+        String subject = getValueByPrefix(args, PREFIX_SUBJECT);
+
+        if (name == null && subject == null && level == null) {
+            throw new TutorSwiftException("Please provide at least one search field (n/(name), s/(subject), l/(lvl).");
+        }
+
+        return new FindCommand(name, subject, level);
+    }
 }

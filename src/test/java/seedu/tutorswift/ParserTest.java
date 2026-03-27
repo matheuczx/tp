@@ -47,12 +47,14 @@ public class ParserTest {
 
     @Test
     public void parseUserInput_list_returnsListCommand() throws TutorSwiftException {
+        // "list" command should return ListCommand
         Command result = Parser.parseUserInput("list");
         assertInstanceOf(seedu.tutorswift.command.ListCommand.class, result);
     }
 
     @Test
     public void parseUserInput_listWithSpaces_returnsListCommand() throws TutorSwiftException {
+        // "list" command with extra spaces should also return ListCommand
         Command result = Parser.parseUserInput("   list   ");
         assertInstanceOf(seedu.tutorswift.command.ListCommand.class, result);
     }
@@ -111,5 +113,37 @@ public class ParserTest {
     public void parseUserInput_byeCommand_isExitTrue() throws TutorSwiftException {
         Command result = Parser.parseUserInput("bye");
         assertTrue(result.isExit());
+    }
+
+    @Test
+    public void parseUserInput_findByName_returnsFindCommand() throws TutorSwiftException {
+        // Find command with name prefix should return a FindCommand
+        Command result = Parser.parseUserInput("find n/John");
+        assertInstanceOf(seedu.tutorswift.command.FindCommand.class, result);
+    }
+
+    @Test
+    public void parseUserInput_findMultipleFields_returnsFindCommand() throws TutorSwiftException {
+        // "find" command multiple valid prefixes should return a FindCommand
+        Command result = Parser.parseUserInput("find n/John s/Math");
+        assertInstanceOf(seedu.tutorswift.command.FindCommand.class, result);
+    }
+
+    @Test
+    public void parseUserInput_findNoArgs_throwsException() {
+        // "find" command without a valid prefix should throw exception
+        assertThrows(TutorSwiftException.class, () -> Parser.parseUserInput("find"));
+    }
+
+    @Test
+    public void parseUserInput_findNoValidPrefix_throwsException() {
+        // "find" command with unsupported prefix should throw exception
+        assertThrows(TutorSwiftException.class, () -> Parser.parseUserInput("find hello"));
+    }
+
+    @Test
+    public void parseUserInput_findEmptyPrefix_throwsException() {
+        // Prefix exists but value is blank
+        assertThrows(TutorSwiftException.class, () -> Parser.parseUserInput("find n/  s/ "));
     }
 }
