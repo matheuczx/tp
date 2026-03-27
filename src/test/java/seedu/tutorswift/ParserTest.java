@@ -46,6 +46,16 @@ public class ParserTest {
     }
 
     @Test
+    public void parseUserInput_deleteZeroIndex_throwsTutorSwiftException() {
+        assertThrows(TutorSwiftException.class, () -> Parser.parseUserInput("delete 0"));
+    }
+
+    @Test
+    public void parseUserInput_deleteNegativeIndex_throwsTutorSwiftException() {
+        assertThrows(TutorSwiftException.class, () -> Parser.parseUserInput("delete -1"));
+    }
+
+    @Test
     public void parseUserInput_list_returnsListCommand() throws TutorSwiftException {
         // "list" command should return ListCommand
         Command result = Parser.parseUserInput("list");
