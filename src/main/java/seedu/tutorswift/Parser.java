@@ -12,6 +12,7 @@ import seedu.tutorswift.command.UnarchiveCommand;
 import seedu.tutorswift.command.ListArchiveCommand;
 import seedu.tutorswift.command.DeleteArchiveCommand;
 import seedu.tutorswift.command.ScheduleCommand;
+import seedu.tutorswift.command.GradeCommand;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -29,13 +30,17 @@ public class Parser {
     private static final String PREFIX_DAY = "d/";
     private static final String PREFIX_START = "s/";
     private static final String PREFIX_END = "e/";
+    private static final String PREFIX_MARK = "m/";
+    private static final String PREFIX_GRADE = "g/";
     private static final String[] ALL_PREFIXES = {
         PREFIX_NAME,
         PREFIX_LEVEL,
         PREFIX_SUBJECT,
         PREFIX_DAY,
         PREFIX_START,
-        PREFIX_END
+        PREFIX_END,
+        PREFIX_MARK,
+        PREFIX_GRADE
     };
 
     /**
@@ -77,6 +82,8 @@ public class Parser {
             return new DeleteArchiveCommand(parseIndex(arguments));
         case "schedule":
             return parseSchedule(arguments);
+        case "grade":
+            return parseGrade(arguments);
         default:
             throw new TutorSwiftException("I'm sorry, but I don't know what '" + userInput + "' means :(\n");
         }
@@ -259,5 +266,38 @@ public class Parser {
         } catch (DateTimeParseException e) {
             throw new TutorSwiftException("Invalid time format. Please use 24-hour HH:mm format (e.g., 14:00).");
         }
+    }
+
+    private static Command parseGrade(String args) throws TutorSwiftException {
+        if (args.isEmpty()) {
+            throw new TutorSwiftException("Usage: grade INDEX m/ASSESSMENT g/SCORE");
+        }
+
+        String[] parts = args.trim().split("\\s+", 2);
+
+        int index;
+        try {
+            index = Integer.parseInt(parts[0]);
+        } catch (NumberFormatException e) {
+            throw new TutorSwiftException("Invalid index.");
+        }
+
+        String remaining = parts.length > 1 ? parts[1] : "";
+
+        String assessment = getValueByPrefix(remaining, PREFIX_MARK);
+        String scoreStr = getValueByPrefix(remaining, PREFIX_GRADE);
+
+        if (assessment == null || scoreStr == null) {
+            throw new TutorSwiftException("Usage: grade INDEX m/ASSESSMENT g/SCORE");
+        }
+
+        int score;
+        try {
+            score = Integer.parseInt(scoreStr);
+        } catch (NumberFormatException e) {
+            throw new TutorSwiftException("Score must be a number.");
+        }
+
+        return new GradeCommand(index, assessment, score);
     }
 }

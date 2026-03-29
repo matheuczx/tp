@@ -23,41 +23,54 @@ ____________________________________________________________
  Now you have 2 students in the list.
 ____________________________________________________________
 ____________________________________________________________
+ Done! I've updated the details for this student:
+    John Doe | Secondary 2 | Math | Grades: [Midterm: 85]
+____________________________________________________________
+____________________________________________________________
+ Done! I've updated the details for this student:
+    Alice Tan | P6 | Science | Grades: [Final: 92]
+____________________________________________________________
+____________________________________________________________
  Here are the ACTIVE students in your list:
-1. John Doe | Secondary 2 | Math
-2. Alice Tan | P6 | English
+1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85]
+2. Alice Tan | P6 | English | Grades: [Final: 92]
 ____________________________________________________________
 ____________________________________________________________
  [Archive Success] This student has been moved to archive:
-    John Doe | Secondary 2 | Math [ARCHIVED]
+    John Doe | Secondary 2 | Math | Grades: [Midterm: 85] [ARCHIVED]
 ____________________________________________________________
 ____________________________________________________________
  Here are the ACTIVE students in your list:
-1. Alice Tan | P6 | English
+1. Alice Tan | P6 | English | Grades: [Final: 92]
+____________________________________________________________
+____________________________________________________________
+ Done! I've updated the details for this student:
+    Alex Tan | P6 | Science
+____________________________________________________________
+____________________________________________________________
+ Here are the ACTIVE students in your list:
+1. Alex Tan | P6 | Science
 ____________________________________________________________
 ____________________________________________________________
  Here are the ARCHIVED students:
-1. John Doe | Secondary 2 | Math [ARCHIVED]
+1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85] [ARCHIVED]
 ____________________________________________________________
 ____________________________________________________________
  [Unarchive Success] Student moved back to active list:
-    John Doe | Secondary 2 | Math
-____________________________________________________________
-____________________________________________________________
- Here are the ACTIVE students in your list:
-1. Alice Tan | P6 | English
-2. John Doe | Secondary 2 | Math
+    John Doe | Secondary 2 | Math | Grades: [Midterm: 85]
 ____________________________________________________________
 ____________________________________________________________
  [Archive Success] This student has been moved to archive:
-    Alice Tan | P6 | English [ARCHIVED]
+    Alex Tan | P6 | Science [ARCHIVED]
 ____________________________________________________________
 ____________________________________________________________
  [Done] Permanently removed this student from ARCHIVE:
-    Alice Tan | P6 | English [ARCHIVED]
+    Alex Tan | P6 | Science [ARCHIVED]
  Now you have 0 students in your archive.
 ____________________________________________________________
 ____________________________________________________________
  Your archive is currently empty.
+Here are the students in your list:
+1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85]
 ____________________________________________________________
 Goodbye! Thanks for using TutorSwift.

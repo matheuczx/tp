@@ -2,7 +2,12 @@ test
 add n/John Doe l/Secondary 2 s/Math
 add n/Alice Tan l/P6 s/English
 list
+grade 1 m/Midterm g/85
+grade 2 m/Final g/92
+list
 archive 1
+list
+edit 2 n/Alex Tan s/Science
 list
 list-archive
 unarchive 1

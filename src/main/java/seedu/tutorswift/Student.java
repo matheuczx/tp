@@ -13,6 +13,7 @@ public class Student {
     private String academicLevel;
     private final ArrayList<Lesson> lessons;
     private boolean isArchived;
+    private final ArrayList<Grade> grades;
 
     /**
      * Creates a student with the given name, subject, and academic level.
@@ -24,6 +25,7 @@ public class Student {
         this.subject = subject;
         this.isArchived = false;
         this.lessons = new ArrayList<>();
+        this.grades = new ArrayList<>();
     }
 
     public String getName() {
@@ -60,7 +62,10 @@ public class Student {
         }
 
         if (subject != null) {
-            this.subject = subject;
+            if (!subject.equals(this.subject)) {
+                this.subject = subject;
+                this.grades.clear();
+            }
         }
     }
     // @@author Alex-Chen-666
@@ -91,6 +96,10 @@ public class Student {
         lessons.add(newLesson);
     }
 
+    public void addGrade(String assessment, int score) {
+        grades.add(new Grade(assessment, score));
+    }
+
     /**
      * Returns a string representation of the student in the format:
      * "name | academic level | subject".
@@ -101,8 +110,20 @@ public class Student {
      */
     @Override
     public String toString() {
+        StringBuilder gradeStr = new StringBuilder();
+
+        if (!grades.isEmpty()) {
+            gradeStr.append(" | Grades: ");
+            for (int i = 0; i < grades.size(); i++) {
+                gradeStr.append("[").append(grades.get(i).toString()).append("]");
+                if (i < grades.size() - 1) {
+                    gradeStr.append(" "); // space between grades only
+                }
+            }
+        }
+      
         String status = isArchived ? " [ARCHIVED]" : "";
-        return name + " | " + academicLevel + " | " + subject + status;
+        return name + " | " + academicLevel + " | " + subject + gradeStr.toString() + status;
     }
 
     // @@author Alex-Chen-666
@@ -112,8 +133,16 @@ public class Student {
      * @return A formatted string for file storage.
      */
     public String toSaveFormat() {
-        return name + " | " + academicLevel + " | " + subject + " | " + isArchived;
-    }
-    // @@author
+        StringBuilder gradeStr = new StringBuilder();
 
+        for (int i = 0; i < grades.size(); i++) {
+            gradeStr.append(grades.get(i).getAssessment())
+                .append(":")
+                .append(grades.get(i).getScore());
+            if (i < grades.size() - 1) {
+                gradeStr.append(",");
+            }
+        }
+        return name + " | " + academicLevel + " | " + subject + " | " + isArchived; + " | "  + gradeStr.toString();
+    }
 }
