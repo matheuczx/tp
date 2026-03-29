@@ -5,9 +5,9 @@ list
 grade 1 m/Midterm g/85
 grade 2 m/Final g/92
 list
-archive 1
-list
 edit 2 n/Alex Tan s/Science
+list
+archive 1
 list
 list-archive
 unarchive 1

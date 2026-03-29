@@ -124,6 +124,15 @@ public class Storage {
 
         Student s = new Student(name, level, subject);
         s.setArchived(isArchived);
+        if (parts.length >= 5 && !parts[4].equals("EMPTY")) {
+            String[] gradeEntries = parts[4].split(",");
+            for (String entry : gradeEntries) {
+                String[] gradeParts = entry.split(":");
+                if (gradeParts.length == 2) {
+                    s.addGrade(gradeParts[0], Integer.parseInt(gradeParts[1]));
+                }
+            }
+        }
         return s;
     }
 }

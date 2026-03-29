@@ -143,6 +143,7 @@ public class Student {
                 gradeStr.append(",");
             }
         }
-        return name + " | " + academicLevel + " | " + subject + " | " + isArchived; + " | "  + gradeStr.toString();
+        String gradeFinal = gradeStr.length() == 0 ? "EMPTY" : gradeStr.toString();
+        return name + " | " + academicLevel + " | " + subject + " | " + isArchived + " | " + gradeFinal;
     }
 }

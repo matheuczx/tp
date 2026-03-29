@@ -19,11 +19,11 @@ public class GradeCommand extends Command {
 
     @Override
     public void execute(StudentList students, Ui ui) throws TutorSwiftException {
-        if (index <= 0 || index > students.getSize()) {
+        if (index <= 0 || index > students.getActiveSize()) {
             throw new TutorSwiftException("Invalid student index.");
         }
 
-        Student student = students.getStudent(index - 1);
+        Student student = students.getActiveStudent(index - 1);
         student.addGrade(assessment, score);
 
         ui.showEditSuccess(student); // reuse existing UI
