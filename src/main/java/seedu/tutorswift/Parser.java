@@ -13,6 +13,7 @@ import seedu.tutorswift.command.ListArchiveCommand;
 import seedu.tutorswift.command.DeleteArchiveCommand;
 import seedu.tutorswift.command.ScheduleCommand;
 import seedu.tutorswift.command.GradeCommand;
+import seedu.tutorswift.command.RemarkCommand;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -26,12 +27,13 @@ public class Parser {
 
     private static final String PREFIX_NAME = "n/";
     private static final String PREFIX_LEVEL = "l/";
-    private static final String PREFIX_SUBJECT = "s/";
+    private static final String PREFIX_SUBJECT = "sub/";
     private static final String PREFIX_DAY = "d/";
     private static final String PREFIX_START = "s/";
     private static final String PREFIX_END = "e/";
     private static final String PREFIX_MARK = "m/";
     private static final String PREFIX_GRADE = "g/";
+    private static final String PREFIX_REMARK = "r/";
     private static final String[] ALL_PREFIXES = {
         PREFIX_NAME,
         PREFIX_LEVEL,
@@ -40,7 +42,8 @@ public class Parser {
         PREFIX_START,
         PREFIX_END,
         PREFIX_MARK,
-        PREFIX_GRADE
+        PREFIX_GRADE,
+        PREFIX_REMARK
     };
 
     /**
@@ -84,6 +87,8 @@ public class Parser {
             return parseSchedule(arguments);
         case "grade":
             return parseGrade(arguments);
+        case "remark":
+            return parseRemark(arguments);
         default:
             throw new TutorSwiftException("I'm sorry, but I don't know what '" + userInput + "' means :(\n");
         }
@@ -141,7 +146,7 @@ public class Parser {
 
         // At least one field must be edited
         if (name == null && level == null && subject == null) {
-            throw new TutorSwiftException("Name (n/), level (l/), or subject (s/) cannot be empty");
+            throw new TutorSwiftException("Name (n/), level (l/), or subject (sub/) cannot be empty");
         }
         assert (name != null || level != null || subject != null) : "name, level or subject field should not be null.";
 
@@ -299,5 +304,30 @@ public class Parser {
         }
 
         return new GradeCommand(index, assessment, score);
+    }
+
+    private static Command parseRemark(String args) throws TutorSwiftException {
+        if (args.isEmpty()) {
+            throw new TutorSwiftException("Usage: remark INDEX r/REMARK");
+        }
+
+        String[] parts = args.trim().split("\\s+", 2);
+
+        int index;
+        try {
+            index = Integer.parseInt(parts[0]);
+        } catch (NumberFormatException e) {
+            throw new TutorSwiftException("Invalid index.");
+        }
+
+        String remaining = parts.length > 1 ? parts[1] : "";
+
+        String remark = getValueByPrefix(remaining, PREFIX_REMARK);
+
+        if (remark == null) {
+            throw new TutorSwiftException("Usage: remark INDEX r/REMARK");
+        }
+
+        return new RemarkCommand(index, remark);
     }
 }

@@ -202,6 +202,13 @@ public class Ui {
         System.out.println(LINE_DIVIDER);
     }
 
+    public void showRemarkSuccess(Student student) {
+        System.out.println(LINE_DIVIDER);
+        System.out.println(" Done! I've added a remark for this student:");
+        printStudentDetails(student);
+        System.out.println(LINE_DIVIDER);
+    }
+
     /**
      * Shows the exit message when the program ends.
      */

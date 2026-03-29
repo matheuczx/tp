@@ -1,11 +1,11 @@
 test
-add n/John Doe l/Secondary 2 s/Math
-add n/Alice Tan l/P6 s/English
+add n/John Doe l/Secondary 2 sub/Math
+add n/Alice Tan l/P6 sub/English
 list
 grade 1 m/Midterm g/85
 grade 2 m/Final g/92
 list
-edit 2 n/Alex Tan s/Science
+edit 2 n/Alex Tan sub/Science
 list
 archive 1
 list
@@ -15,4 +15,13 @@ list
 archive 1
 delete-archive 1
 list-archive
+add n/Bob Lee l/Secondary 3 sub/Physics
+list
+grade 2 m/Quiz g/78
+remark 2 r/Struggles with concepts
+list
+archive 2
+list-archive
+unarchive 1
+list
 bye

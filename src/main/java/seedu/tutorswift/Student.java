@@ -14,6 +14,7 @@ public class Student {
     private final ArrayList<Lesson> lessons;
     private boolean isArchived;
     private final ArrayList<Grade> grades;
+    private String remark;
 
     /**
      * Creates a student with the given name, subject, and academic level.
@@ -26,6 +27,7 @@ public class Student {
         this.isArchived = false;
         this.lessons = new ArrayList<>();
         this.grades = new ArrayList<>();
+        this.remark = null;
     }
 
     public String getName() {
@@ -100,6 +102,14 @@ public class Student {
         grades.add(new Grade(assessment, score));
     }
 
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
     /**
      * Returns a string representation of the student in the format:
      * "name | academic level | subject".
@@ -123,7 +133,11 @@ public class Student {
         }
       
         String status = isArchived ? " [ARCHIVED]" : "";
-        return name + " | " + academicLevel + " | " + subject + gradeStr.toString() + status;
+        String remarkStr = (remark != null) ? " | Remark: " + remark : "";
+        return name + " | " + academicLevel + " | " + subject
+                + gradeStr.toString()
+                + remarkStr
+                + status;
     }
 
     // @@author Alex-Chen-666
