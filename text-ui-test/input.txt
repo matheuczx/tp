@@ -15,4 +15,13 @@ list
 archive 1
 delete-archive 1
 list-archive
+add n/Bob Lee l/Secondary 3 s/Physics
+list
+grade 2 m/Quiz g/78
+remark 2 r/Struggles with concepts
+list
+archive 2
+list-archive
+unarchive 1
+list
 bye

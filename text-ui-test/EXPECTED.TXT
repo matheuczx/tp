@@ -82,4 +82,44 @@ ____________________________________________________________
 ____________________________________________________________
  Your archive is currently empty.
 ____________________________________________________________
+____________________________________________________________
+ Got it. I've added this student:
+    Bob Lee | Secondary 3 | Physics
+ Now you have 2 students in the list.
+____________________________________________________________
+____________________________________________________________
+ Here are the ACTIVE students in your list:
+1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85]
+2. Bob Lee | Secondary 3 | Physics
+____________________________________________________________
+____________________________________________________________
+ Done! I've updated the details for this student:
+    Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78]
+____________________________________________________________
+____________________________________________________________
+ Done! I've added a remark for this student:
+    Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts
+____________________________________________________________
+____________________________________________________________
+ Here are the ACTIVE students in your list:
+1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85]
+2. Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts
+____________________________________________________________
+____________________________________________________________
+ [Archive Success] This student has been moved to archive:
+    Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts [ARCHIVED]
+____________________________________________________________
+____________________________________________________________
+ Here are the ARCHIVED students:
+1. Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts [ARCHIVED]
+____________________________________________________________
+____________________________________________________________
+ [Unarchive Success] Student moved back to active list:
+    Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts
+____________________________________________________________
+____________________________________________________________
+ Here are the ACTIVE students in your list:
+1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85]
+2. Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts
+____________________________________________________________
 Goodbye! Thanks for using TutorSwift.
