@@ -28,9 +28,9 @@ public class Parser {
     private static final String PREFIX_NAME = "n/";
     private static final String PREFIX_LEVEL = "l/";
     private static final String PREFIX_SUBJECT = "sub/";
-    private static final String PREFIX_DAY = "d/";
-    private static final String PREFIX_START = "s/";
-    private static final String PREFIX_END = "e/";
+    private static final String PREFIX_DAY = "day/";
+    private static final String PREFIX_START = "start/";
+    private static final String PREFIX_END = "end/";
     private static final String PREFIX_MARK = "m/";
     private static final String PREFIX_GRADE = "g/";
     private static final String PREFIX_REMARK = "r/";
@@ -256,7 +256,7 @@ public class Parser {
         String endStr = getValueByPrefix(args, PREFIX_END);
 
         if (name == null || dayStr == null || startStr == null || endStr == null) {
-            throw new TutorSwiftException("Invalid format. Use: schedule n/NAME d/DAY s/HH:mm e/HH:mm");
+            throw new TutorSwiftException("Invalid format. Use: schedule n/NAME day/DAY start/HH:mm end/HH:mm");
         }
 
         try {
