@@ -428,13 +428,21 @@ public class Parser {
      * Validates that the format is exactly YYYY-MM and month is between 01 and 12.
      */
     private static YearMonth parseYearMonth(String args) throws TutorSwiftException {
+        boolean prefixPresent = args.contains(PREFIX_PERIOD);
         String ymStr = getValueByPrefix(args, PREFIX_PERIOD);
-        if (ymStr == null) {
-            return YearMonth.now();
+
+        if (!prefixPresent) {
+            throw new TutorSwiftException("Missing ym/ prefix. Usage: paid/unpaid INDEX ym/YYYY-MM");
         }
+
+        if (ymStr == null) {
+            throw new TutorSwiftException("ym/ requires a value. Usage: paid/unpaid INDEX ym/YYYY-MM");
+        }
+
         if (!ymStr.trim().matches("\\d{4}-\\d{2}")) {
             throw new TutorSwiftException("Invalid format. Use ym/YYYY-MM (e.g. ym/2026-03).");
         }
+
         try {
             YearMonth ym = YearMonth.parse(ymStr.trim());
             int month = ym.getMonthValue();

@@ -10,7 +10,6 @@ import java.time.YearMonth;
 /**
  * Command to mark a month's payment as paid for a student.
  * Usage: paid INDEX [ym/YYYY-MM]
- * If ym/ is omitted, defaults to the current month.
  */
 public class PaidCommand extends Command {
 
