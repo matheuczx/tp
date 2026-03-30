@@ -262,7 +262,8 @@ public class Ui {
 
     /**
      * Formats and prints the list of upcoming lessons according to current date and time.
-     * * @param entries The sorted list of relative lessons.
+     *
+     * @param entries The sorted list of relative lessons.
      */
     public void showUpcomingLessons(List<RelativeLesson> entries) {
         StringBuilder output = new StringBuilder("Here are your upcoming lessons for the next 7 days:\n");
