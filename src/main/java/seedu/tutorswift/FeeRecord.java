@@ -94,7 +94,7 @@ public class FeeRecord {
         StringBuilder paidStr = new StringBuilder();
         for (int i = 0; i < paidMonths.size(); i++) {
             YearMonth ym = paidMonths.get(i);
-            paidStr.append(ym.getMonth()).append(" ").append(ym.getYear()).append(": Paid ✓");
+            paidStr.append(ym.getMonth()).append(" ").append(ym.getYear()).append(": [PAID]");
             if (i < paidMonths.size() - 1) {
                 paidStr.append(", ");
             }
