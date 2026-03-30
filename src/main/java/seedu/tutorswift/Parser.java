@@ -18,6 +18,8 @@ import seedu.tutorswift.command.FeeCommand;
 import seedu.tutorswift.command.PaidCommand;
 import seedu.tutorswift.command.UnpaidCommand;
 import seedu.tutorswift.command.UpcomingCommand;
+import seedu.tutorswift.command.RemoveGradeCommand;
+import seedu.tutorswift.command.RemoveRemarkCommand;
 
 import java.time.YearMonth;
 import java.time.DayOfWeek;
@@ -106,6 +108,10 @@ public class Parser {
             return parseUnpaid(arguments);
         case "upcoming":
             return new UpcomingCommand();
+        case "remove-grade":
+            return parseRemoveGrade(arguments);
+        case "remove-remark":
+            return parseRemoveRemark(arguments);
         default:
             throw new TutorSwiftException("I'm sorry, but I don't know what '" + userInput + "' means :(\n");
         }
@@ -323,6 +329,30 @@ public class Parser {
         return new GradeCommand(index, assessment, score);
     }
 
+    private static Command parseRemoveGrade(String args) throws TutorSwiftException {
+        if (args.isEmpty()) {
+            throw new TutorSwiftException("Usage: remove-grade INDEX m/ASSESSMENT");
+        }
+
+        String[] parts = args.trim().split("\\s+", 2);
+
+        int index;
+        try {
+            index = Integer.parseInt(parts[0]);
+        } catch (NumberFormatException e) {
+            throw new TutorSwiftException("Invalid index.");
+        }
+
+        String remaining = parts.length > 1 ? parts[1] : "";
+        String assessment = getValueByPrefix(remaining, PREFIX_MARK);
+
+        if (assessment == null) {
+            throw new TutorSwiftException("Usage: remove-grade INDEX m/ASSESSMENT");
+        }
+
+        return new RemoveGradeCommand(index, assessment);
+    }
+
     private static Command parseRemark(String args) throws TutorSwiftException {
         if (args.isEmpty()) {
             throw new TutorSwiftException("Usage: remark INDEX r/REMARK");
@@ -346,6 +376,21 @@ public class Parser {
         }
 
         return new RemarkCommand(index, remark);
+    }
+
+    private static Command parseRemoveRemark(String args) throws TutorSwiftException {
+        if (args.isEmpty()) {
+            throw new TutorSwiftException("Usage: remove-remark INDEX");
+        }
+
+        int index;
+        try {
+            index = Integer.parseInt(args.trim());
+        } catch (NumberFormatException e) {
+            throw new TutorSwiftException("Invalid index.");
+        }
+
+        return new RemoveRemarkCommand(index);
     }
 
     /**

@@ -133,6 +133,29 @@ public class Student {
         return remark;
     }
 
+    public void removeGrade(String assessment) throws TutorSwiftException {
+        boolean removed = false;
+
+        for (int i = 0; i < grades.size(); i++) {
+            if (grades.get(i).getAssessment().equals(assessment)) {
+                grades.remove(i);
+                removed = true;
+                break;
+            }
+        }
+
+        if (!removed) {
+            throw new TutorSwiftException("Grade not found.");
+        }
+    }
+
+    public void clearRemark() throws TutorSwiftException {
+        if (remark == null) {
+            throw new TutorSwiftException("No remark to remove.");
+        }
+        remark = null;
+    }
+
     /**
      * Returns a string representation of the student in the format:
      * "name | academic level | subject".
