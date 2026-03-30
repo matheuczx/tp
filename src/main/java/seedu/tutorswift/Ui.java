@@ -1,6 +1,7 @@
 package seedu.tutorswift;
 
 import java.util.Scanner;
+import java.time.YearMonth;
 
 /**
  * Handles user interface messages for the program.
@@ -205,6 +206,48 @@ public class Ui {
     public void showRemarkSuccess(Student student) {
         System.out.println(LINE_DIVIDER);
         System.out.println(" Done! I've added a remark for this student:");
+        printStudentDetails(student);
+        System.out.println(LINE_DIVIDER);
+    }
+
+    /**
+     * Shows success message after setting a student's per-lesson fee.
+     *
+     * @param student      The student whose fee was updated.
+     * @param feePerLesson The new per-lesson fee in dollars.
+     */
+    public void showFeeSuccess(Student student, int feePerLesson) {
+        System.out.println(LINE_DIVIDER);
+        System.out.println(" Done! Fee per lesson for " + student.getName()
+                + " set to $" + feePerLesson + "/lesson.");
+        printStudentDetails(student);
+        System.out.println(LINE_DIVIDER);
+    }
+
+    /**
+     * Shows success message after marking a student as paid for a given month.
+     *
+     * @param student The student marked as paid.
+     * @param month   The month that was marked paid.
+     */
+    public void showPaidSuccess(Student student, YearMonth month) {
+        System.out.println(LINE_DIVIDER);
+        System.out.println(" Done! " + student.getName() + " is marked as PAID for "
+                + month.getMonth() + " " + month.getYear() + ".");
+        printStudentDetails(student);
+        System.out.println(LINE_DIVIDER);
+    }
+
+    /**
+     * Shows success message after marking a student as unpaid for a given month.
+     *
+     * @param student The student marked as unpaid.
+     * @param month   The month that was marked unpaid.
+     */
+    public void showUnpaidSuccess(Student student, YearMonth month) {
+        System.out.println(LINE_DIVIDER);
+        System.out.println(" Done! " + student.getName() + " is marked as UNPAID for "
+                + month.getMonth() + " " + month.getYear() + ".");
         printStudentDetails(student);
         System.out.println(LINE_DIVIDER);
     }

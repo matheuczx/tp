@@ -30,7 +30,11 @@ class RemarkCommandTest {
 
         Student student = studentList.getActiveStudent(0);
         assertEquals("Needs improvement on grammar", student.getRemark());
-        assertEquals("Alice Tan | P6 | English | Remark: Needs improvement on grammar", student.toString());
+        assertEquals(
+                "Alice Tan | P6 | English | Remark: Needs improvement on grammar "
+                        + "| Fee: Not set | No payments recorded",
+                student.toString()
+        );
     }
 
     @Test
