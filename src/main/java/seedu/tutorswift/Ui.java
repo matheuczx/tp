@@ -210,6 +210,16 @@ public class Ui {
     }
 
     /**
+     * Prints a success message when a lesson is scheduled.
+     *
+     * @param studentName The name of the student.
+     * @param lesson The scheduled lesson timing.
+     */
+    public void showLessonScheduled(String studentName, Lesson lesson) {
+        System.out.println("Got it! I've scheduled a lesson for " + studentName + " on " + lesson);
+    }
+
+    /**
      * Shows the exit message when the program ends.
      */
     public void showExit() {

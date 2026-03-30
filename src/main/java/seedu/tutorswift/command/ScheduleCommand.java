@@ -39,6 +39,6 @@ public class ScheduleCommand extends Command {
         Lesson newLesson = new Lesson(day, startTime, endTime);
         targetStudent.addLesson(newLesson);
 
-        System.out.println("Got it! I've scheduled a lesson for " + targetStudent.getName() + " on " + newLesson);
+        ui.showLessonScheduled(targetStudent.getName(), newLesson);
     }
 }
