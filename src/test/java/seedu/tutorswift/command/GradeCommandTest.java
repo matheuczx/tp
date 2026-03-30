@@ -30,7 +30,11 @@ class GradeCommandTest {
 
         Student student = studentList.getActiveStudent(0);
         assertEquals(1, student.toString().split("Grades:").length - 1 + 0); // confirms grade exists
-        assertEquals("John Doe | Sec 3 | Math | Grades: [Midterm: 90] | Fee: Not set | No payments recorded", student.toString());
+        assertEquals(
+                "John Doe | Sec 3 | Math | Grades: [Midterm: 90] "
+                        + "| Fee: Not set | No payments recorded",
+                student.toString()
+        );
     }
 
     @Test
