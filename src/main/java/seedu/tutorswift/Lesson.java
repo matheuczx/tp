@@ -17,6 +17,18 @@ public class Lesson {
         this.endTime = endTime;
     }
 
+    public DayOfWeek getDay() {
+        return day;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
     /**
      * Checks if this lesson overlaps with another lesson.
      */
