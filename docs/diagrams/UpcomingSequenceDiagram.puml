@@ -1,0 +1,63 @@
+@startuml
+hide footbox
+skinparam ArrowFontStyle normal
+
+participant ":UpcomingCommand" as UpcomingCommand
+participant "allLessons:ArrayList" as ArrayList
+participant "students:StudentList" as StudentList
+participant "student:Student" as Student
+participant "rl:RelativeLesson" as RelativeLesson
+participant "ui:Ui" as Ui
+
+[-> UpcomingCommand : execute(students, ui)
+activate UpcomingCommand
+
+create ArrayList
+UpcomingCommand -> ArrayList : new ArrayList()
+activate ArrayList
+ArrayList --> UpcomingCommand
+deactivate ArrayList
+
+
+loop activeSize times
+    UpcomingCommand -> StudentList : getActiveStudent(i)
+    activate StudentList
+    StudentList --> UpcomingCommand : student
+    deactivate StudentList
+
+    UpcomingCommand -> Student : getLessons()
+    activate Student
+    Student --> UpcomingCommand : lessons
+    deactivate Student
+
+    loop for each lesson in lessons
+        create RelativeLesson
+        UpcomingCommand -> RelativeLesson : RelativeLesson(student, lesson, today, now)
+        activate RelativeLesson
+        RelativeLesson --> UpcomingCommand : rl
+        deactivate RelativeLesson
+
+        UpcomingCommand -> ArrayList : add(rl)
+        activate ArrayList
+        deactivate ArrayList
+    end
+end
+
+alt allLessons is empty
+    UpcomingCommand -> Ui : showEmptyUpcomingLessons()
+    activate Ui
+    deactivate Ui
+else allLessons has elements
+    UpcomingCommand -> ArrayList : sort(comparator)
+    activate ArrayList
+    deactivate ArrayList
+
+    UpcomingCommand -> Ui : showUpcomingLessons(allLessons)
+    activate Ui
+    deactivate Ui
+end
+
+[<-- UpcomingCommand
+deactivate UpcomingCommand
+destroy UpcomingCommand
+@enduml

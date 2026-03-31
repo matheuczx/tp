@@ -4,13 +4,11 @@
 
 {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
-## Design
-
-{Describe the design and implementation of the product. Use UML diagrams and short code snippets where applicable.}
-
-## Implementation
+## Design & Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+---
 
 ### Edit Student Feature
 
@@ -59,6 +57,8 @@ The following sequence diagram shows how an edit operation executes through the 
   - Pros: Keeps the Student class slightly smaller by removing the dedicated editStudent method.
 
   - Cons: Breaks encapsulation. It forces the command logic to be overly aware of the student's internal structure.
+
+---
 
 ### Schedule Lesson Feature
 
@@ -116,6 +116,69 @@ The following sequence diagram shows how a schedule operation executes through t
   - Pros: Strictly prevents accidental double-booking for the tutor.
   - Cons: Requires iterating through every student's timetable every time a new lesson is scheduled using `Lesson#isOverlapping()`. 
     Furthermore, group classes would be impossible to schedule unless a new "Group" class is introduced.
+
+---
+
+### Upcoming Lessons Feature
+The upcoming mechanism provides the user with a dynamically sorted list of all scheduled lessons across all students, ordered by how soon they are happening relative to the current day and time.
+It is facilitated primarily by the `UpcomingCommand`, `StudentList`, `Student`, `Lesson`, and the `RelativeLesson` wrapper class.
+
+The core logic resides within the `UpcomingCommand#execute()` method and the `RelativeLesson` constructor.
+The operation is executed through the following sequence:
+
+1. `UpcomingCommand#execute(students, ui)` is invoked.
+
+2. The command initialises an empty `ArrayList` to store all lessons and retrieves the current `DayOfWeek` and `LocalTime`.
+
+3. It iterates through every active student in the `StudentList` using `getActiveSize()` and `getActiveStudent(i)`.
+
+4. For each student, it retrieves their lessons via `getLessons()`. For every lesson, a new `RelativeLesson` object is instantiated. This wrapper class bundles the student, the lesson, and the current time to calculate `daysFromToday`.
+
+5. The command adds all `RelativeLesson` objects into the list.
+
+6. If the `allLessons` list is empty, it calls `Ui#showEmptyUpcomingLessons()`.
+
+7. If the list is populated, it sorts the list using a custom comparator: first by `daysFromToday` (ascending), and then by the lesson's `startTime` (ascending).
+
+8. The `Ui#showUpcomingLessons(allLessons)` method is called to display the sorted list to the user.
+
+Given below is an example usage scenario and how the upcoming mechanism behaves at each step.
+
+Step 1. The user launches the application. The `StudentList` contains active students with various scheduled lessons.
+
+Step 2. The user executes the command `upcoming`.
+
+Step 3. The parser interprets the user input and instantiates an `UpcomingCommand` object.
+
+Step 4. The `UpcomingCommand#execute()` method is called. It fetches the current time (e.g., Monday, 10:00 AM).
+
+Step 5. The command iterates through the `StudentList`. For every lesson found, it instantiates a `RelativeLesson`. The `RelativeLesson` calculates that a lesson on Tuesday is 1 day away, while a lesson on Monday at 9:00 AM (already passed) is 7 days away.
+
+Step 6. All `RelativeLesson` objects are collected into an `ArrayList`. The command sorts this list chronologically.
+
+Step 7. The command calls `ui.showUpcomingLessons(allLessons)` to display the sorted schedule to the tutor.
+
+The following sequence diagram shows how the upcoming operation executes through the objects:
+
+![Upcoming Sequence Diagram](images/UpcomingSequenceDiagram.png)
+
+### Design Considerations
+
+**Aspect: Sorting recurring weekly lessons dynamically based on the current time.**
+
+- **Alternative 1 (Current Choice)**: Use a `RelativeLesson` wrapper class to calculate the "distance" (in days) from the current time when the command is executed.
+
+  - Pros: Clean separation of concerns. The core `Lesson` class remains a simple, lightweight entity that only knows its DayOfWeek and time. The time-distance math is isolated to the wrapper class when it is actually needed for viewing.
+
+  - Cons: Instantiates multiple temporary RelativeLesson objects every time the command is executed
+
+- **Alternative 2**: Store absolute dates (LocalDateTime) in the `Lesson` object instead of recurring days (`DayOfWeek`), and sort directly by the date.
+
+  - Pros: Sorting becomes trivial, as standard Java Date objects can be compared directly.
+
+  - Cons: Requires building a complex background mechanism to automatically "roll over" or update the lesson dates every week once they have passed.
+
+---
 
 ### Grade Feature
 
