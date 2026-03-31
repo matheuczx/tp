@@ -1,0 +1,48 @@
+@startuml
+hide footbox
+actor User
+participant ":FindCommand" as FC
+participant ":StudentList" as SL
+participant ":Ui" as UI
+participant ":Student" as S
+
+User -> FC : execute(students, ui)
+activate FC
+
+FC -> SL : getAllActive()
+activate SL
+SL --> FC : activeList
+deactivate SL
+
+FC -> FC : searchList(activeList, results)
+activate FC
+loop for each student in activeList
+    FC -> S : getName()/getSubject()/getAcademicLevel()
+    activate S
+    S --> FC : values
+    deactivate S
+end
+deactivate FC
+
+FC -> SL : getAllArchived()
+activate SL
+SL --> FC : archivedList
+deactivate SL
+
+FC -> FC : searchList(archivedList, results)
+activate FC
+loop for each student in archivedList
+    FC -> S : getName()/getSubject()/getAcademicLevel()
+    activate S
+    S --> FC : values
+    deactivate S
+end
+deactivate FC
+
+FC -> UI : showFindResults(results)
+activate UI
+UI --> FC : (void)
+deactivate UI
+
+deactivate FC
+@enduml
