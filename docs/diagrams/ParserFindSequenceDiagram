@@ -1,0 +1,22 @@
+@startuml
+hide footbox
+
+actor User
+participant ":Parser"
+participant ":FindCommand"
+
+User -> ":Parser" : parseUserInput("find n/John s/Math")
+activate ":Parser"
+":Parser" -> ":Parser" : parseFind(args)
+
+alt valid prefix
+    ":Parser" -> ":FindCommand" : new FindCommand(name, subject, level)
+    activate ":FindCommand"
+    ":Parser" --> User : return FindCommand
+    deactivate ":FindCommand"
+else invalid prefix or empty args
+    ":Parser" --> User : throw TutorSwiftException
+end
+
+deactivate ":Parser"
+@enduml
