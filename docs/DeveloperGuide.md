@@ -337,6 +337,70 @@ Tested using `FindCommandTest` and `ParserTest`:
 
 ---
 
+### Delete Feature
+
+The `delete` command permanently removes an active student from the student list by
+their displayed index. It is handled by the `Parser`, `DeleteCommand`,
+`StudentList` and `Ui` classes.
+
+Command parsing is handled by `Parser#parseDelete()`, which extracts the student
+index from the raw argument string. It validates that the index is a non-empty,
+positive integer before constructing a `DeleteCommand` object.
+
+During execution, `DeleteCommand#execute()` performs a range check against the
+active list size, retrieves the target `Student` before removal, so its details
+remain available for the success message, then calls
+`StudentList#deleteActiveStudent()` to remove it permanently.
+
+#### Example Usage Scenario
+
+Step 1. The user launches the application. The `StudentList` contains two active
+students: "Alice" at index 1 and "Bob" at index 2.
+
+Step 2. The user decides to remove Alice and executes the command `delete 1`.
+
+Step 3. The parser processes the input, validates that `"1"` is a positive integer
+and creates a `DeleteCommand` with `index = 1`.
+
+Step 4. `DeleteCommand#execute()` is called. It converts the one-based index to
+zero-based (`index - 1 = 0`) and verifies it is within the active list bounds.
+
+Step 5. The command retrieves Alice using `StudentList#getActiveStudent(0)` before
+deletion, preserving her details for the success message.
+
+Step 6. The command calls `StudentList#deleteActiveStudent(0)`, permanently removing
+Alice from the active list.
+
+Step 7. `Ui#showDeleteSuccess(deletedStudent, students.getActiveSize())` is called,
+displaying Alice's details and the updated active student count of 1.
+
+Step 8. Control returns to `TutorSwift`, which automatically calls
+`Storage#save(students)` to persist the updated list to disk.
+
+The following sequence diagram shows how a delete operation executes through the
+objects:
+
+![Delete Sequence Diagram](images/DeleteSequenceDiagram.png)
+
+#### Design Considerations
+
+**Aspect: When to retrieve the student object relative to deletion**
+
+- **Alternative 1 (Chosen):** Call `StudentList#getActiveStudent()` to
+  capture the student reference before calling `deleteActiveStudent()`.
+  - Pros: The deleted student's details remain accessible for the success message,
+    without needing to store a separate copy elsewhere.
+  - Cons: Requires two separate calls to `StudentList` instead of one combined
+    remove-and-return operation.
+
+- **Alternative 2:** Have `StudentList#deleteActiveStudent()` return the removed
+  `Student` object directly (similar to `ArrayList#remove()`).
+  - Pros: Reduces the number of method calls.
+  - Cons: Requires changing the existing `StudentList` and updating all
+    callers, which increases the risk of introducing bugs across the codebase.
+
+---
+
 ## Appendix: 
 
 

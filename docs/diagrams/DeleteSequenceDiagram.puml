@@ -1,0 +1,35 @@
+@startuml
+hide footbox
+skinparam ArrowFontStyle normal
+
+participant ":DeleteCommand" as DC
+participant "students:StudentList" as SL
+participant "ui:Ui" as Ui
+
+[-> DC : execute(students, ui)
+activate DC
+
+opt index valid
+
+    DC -> SL : getActiveStudent(index - 1)
+    activate SL
+    SL --> DC : deletedStudent
+    deactivate SL
+
+    DC -> SL : deleteActiveStudent(index - 1)
+    activate SL
+    SL --> DC :
+    deactivate SL
+
+    DC -> Ui : showDeleteSuccess(deletedStudent, students.getActiveSize())
+    activate Ui
+    Ui --> DC :
+    deactivate Ui
+
+end
+
+[<-- DC
+deactivate DC
+destroy DC
+
+@enduml
