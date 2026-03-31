@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor User
+participant Parser
+participant GradeCommand
+participant StudentList
+participant Student
+participant Grade
+participant Ui
+
+User -> Parser : "grade 1 m/WA1 g/85"
+Parser -> Parser : parseGrade(args)
+Parser -> GradeCommand : new GradeCommand(index, assessment, score)
+
+User -> GradeCommand : execute(students, ui)
+
+GradeCommand -> StudentList : getActiveStudent(index-1)
+StudentList --> GradeCommand : Student
+
+GradeCommand -> Student : addGrade(assessment, score)
+
+Student -> Grade : new Grade(assessment, score)
+Student -> Student : grades.add(Grade)
+
+GradeCommand -> Ui : showEditSuccess(student)
+
+@enduml

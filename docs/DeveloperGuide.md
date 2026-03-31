@@ -60,6 +60,67 @@ Aspect: How student details are accessed and updated.
 
   - Cons: Breaks encapsulation. It forces the command logic to be overly aware of the student's internal structure.
 
+### Grade Feature
+
+#### Implementation
+
+The `grade` command allows users to assign assessment scores to a student.  
+It is facilitated by the `Parser`, `GradeCommand`, `StudentList`, and `Student` classes.
+
+The command parsing is handled by `Parser#parseGrade()`, which extracts:
+- the student index
+- the assessment name (`m/`)
+- the score (`g/`)
+
+A `GradeCommand` object is then created with these parameters.
+
+During execution, `GradeCommand#execute()` retrieves the target `Student` from `StudentList` and calls `Student#addGrade()`, which creates and stores a new `Grade` object.
+
+---
+
+#### Example Usage Scenario
+
+Step 1. The user launches the application. The `StudentList` contains a student named "Alice" at index 1.
+
+Step 2. The user executes the command:
+
+`grade 1 m/WA1 g/85`
+
+Step 3. The parser processes the input and creates a `GradeCommand` with:
+- `index = 1`
+- `assessment = "WA1"`
+- `score = 85`
+
+Step 4. `GradeCommand#execute()` is called. It validates that index 1 is within bounds.
+
+Step 5. The command retrieves the student using `StudentList#getActiveStudent(0)`.
+
+Step 6. The command calls:
+
+`student.addGrade("WA1", 85)`
+
+![Grade Sequence Diagram](images/GradeFeatureDiagram.png)
+
+#### Design Considerations
+
+**Aspect: Where to store grade logic**
+
+- **Option 1 (chosen): Store in `Student`**
+  - Keeps grade-related behavior encapsulated within the student
+  - Aligns with object-oriented design (student owns its grades)
+
+- **Option 2: Handle in `StudentList`**
+  - Centralizes logic but reduces cohesion
+
+Option 1 was chosen for better modularity and maintainability.
+
+---
+
+#### Notes
+
+- Grades are stored as a list of `Grade` objects
+- Duplicate assessments are allowed (no validation enforced)
+
 ## Product scope
 ### Target user profile
 
