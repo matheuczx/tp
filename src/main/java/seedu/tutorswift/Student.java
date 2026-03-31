@@ -1,5 +1,6 @@
 package seedu.tutorswift;
 
+import java.time.YearMonth;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +16,7 @@ public class Student {
     private boolean isArchived;
     private final ArrayList<Grade> grades;
     private String remark;
+    private final FeeRecord feeRecord;
 
     /**
      * Creates a student with the given name, subject, and academic level.
@@ -28,6 +30,7 @@ public class Student {
         this.lessons = new ArrayList<>();
         this.grades = new ArrayList<>();
         this.remark = null;
+        this.feeRecord = new FeeRecord();
     }
 
     public String getName() {
@@ -42,6 +45,14 @@ public class Student {
         return academicLevel;
     }
 
+    public FeeRecord getFeeRecord() {
+        return feeRecord;
+    }
+
+    public ArrayList<Lesson> getLessons() {
+        return lessons;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -52,6 +63,18 @@ public class Student {
 
     public void setAcademicLevel(String academicLevel) {
         this.academicLevel = academicLevel;
+    }
+
+    public void setFeePerLesson(int fee) {
+        this.feeRecord.setFeePerLesson(fee);
+    }
+
+    public void markPaid(YearMonth month) {
+        this.feeRecord.markPaid(month);
+    }
+
+    public void markUnpaid(YearMonth month) {
+        this.feeRecord.markUnpaid(month);
     }
 
     public void editStudent(String name, String academicLevel, String subject) {
@@ -110,6 +133,29 @@ public class Student {
         return remark;
     }
 
+    public void removeGrade(String assessment) throws TutorSwiftException {
+        boolean removed = false;
+
+        for (int i = 0; i < grades.size(); i++) {
+            if (grades.get(i).getAssessment().equals(assessment)) {
+                grades.remove(i);
+                removed = true;
+                break;
+            }
+        }
+
+        if (!removed) {
+            throw new TutorSwiftException("Grade not found.");
+        }
+    }
+
+    public void clearRemark() throws TutorSwiftException {
+        if (remark == null) {
+            throw new TutorSwiftException("No remark to remove.");
+        }
+        remark = null;
+    }
+
     /**
      * Returns a string representation of the student in the format:
      * "name | academic level | subject".
@@ -121,7 +167,6 @@ public class Student {
     @Override
     public String toString() {
         StringBuilder gradeStr = new StringBuilder();
-
         if (!grades.isEmpty()) {
             gradeStr.append(" | Grades: ");
             for (int i = 0; i < grades.size(); i++) {
@@ -131,12 +176,27 @@ public class Student {
                 }
             }
         }
+
+        StringBuilder lessonStr = new StringBuilder();
+        if (!lessons.isEmpty()) {
+            lessonStr.append(" | Lessons: ");
+            for (int i = 0; i < lessons.size(); i++) {
+                lessonStr.append("[").append(lessons.get(i).toString()).append("]");
+                if (i < lessons.size() - 1) {
+                    lessonStr.append(" ");
+                }
+            }
+        }
       
         String status = isArchived ? " [ARCHIVED]" : "";
+
         String remarkStr = (remark != null) ? " | Remark: " + remark : "";
+
         return name + " | " + academicLevel + " | " + subject
                 + gradeStr.toString()
+                + lessonStr.toString()
                 + remarkStr
+                + " | " + feeRecord.toString()
                 + status;
     }
 
@@ -158,6 +218,8 @@ public class Student {
             }
         }
         String gradeFinal = gradeStr.length() == 0 ? "EMPTY" : gradeStr.toString();
-        return name + " | " + academicLevel + " | " + subject + " | " + isArchived + " | " + gradeFinal;
+        String remarkFinal = (remark == null) ? "NONE" : remark;
+        return name + " | " + academicLevel + " | " + subject + " | " + isArchived
+                + " | " + gradeFinal + " | " + remarkFinal + " | " + feeRecord.toSaveFormat();
     }
 }

@@ -1,0 +1,31 @@
+@startuml
+hide footbox
+skinparam ArrowFontStyle normal
+
+participant ":EditCommand" as EditCommand
+participant "students:StudentList" as StudentList
+participant "studentToEdit:Student" as Student
+participant "ui:Ui" as Ui
+
+[-> EditCommand : execute(students, ui)
+activate EditCommand
+
+opt index valid
+    EditCommand -> StudentList : getActiveStudent(studentIndex - 1)
+    activate StudentList
+    StudentList --> EditCommand : studentToEdit
+    deactivate StudentList
+
+    EditCommand -> Student : editStudent(newName, newLevel, newSubject)
+    activate Student
+    deactivate Student
+
+    EditCommand -> Ui : showEditSuccess(studentToEdit)
+    activate Ui
+    deactivate Ui
+end
+
+[<-- EditCommand
+deactivate EditCommand
+destroy EditCommand
+@enduml

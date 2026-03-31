@@ -24,4 +24,12 @@ archive 2
 list-archive
 unarchive 1
 list
+fee 1 f/70
+fee 2 f/50
+list
+paid 1 ym/2026-03
+paid 2 ym/2026-02
+list
+unpaid 1 ym/2026-03
+list
 bye

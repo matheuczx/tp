@@ -14,7 +14,14 @@ import seedu.tutorswift.command.DeleteArchiveCommand;
 import seedu.tutorswift.command.ScheduleCommand;
 import seedu.tutorswift.command.GradeCommand;
 import seedu.tutorswift.command.RemarkCommand;
+import seedu.tutorswift.command.FeeCommand;
+import seedu.tutorswift.command.PaidCommand;
+import seedu.tutorswift.command.UnpaidCommand;
+import seedu.tutorswift.command.UpcomingCommand;
+import seedu.tutorswift.command.RemoveGradeCommand;
+import seedu.tutorswift.command.RemoveRemarkCommand;
 
+import java.time.YearMonth;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
@@ -28,12 +35,14 @@ public class Parser {
     private static final String PREFIX_NAME = "n/";
     private static final String PREFIX_LEVEL = "l/";
     private static final String PREFIX_SUBJECT = "sub/";
-    private static final String PREFIX_DAY = "d/";
-    private static final String PREFIX_START = "s/";
-    private static final String PREFIX_END = "e/";
+    private static final String PREFIX_DAY = "day/";
+    private static final String PREFIX_START = "start/";
+    private static final String PREFIX_END = "end/";
     private static final String PREFIX_MARK = "m/";
     private static final String PREFIX_GRADE = "g/";
     private static final String PREFIX_REMARK = "r/";
+    private static final String PREFIX_FEE = "f/";
+    private static final String PREFIX_PERIOD = "ym/";
     private static final String[] ALL_PREFIXES = {
         PREFIX_NAME,
         PREFIX_LEVEL,
@@ -43,7 +52,9 @@ public class Parser {
         PREFIX_END,
         PREFIX_MARK,
         PREFIX_GRADE,
-        PREFIX_REMARK
+        PREFIX_REMARK,
+        PREFIX_FEE,
+        PREFIX_PERIOD
     };
 
     /**
@@ -89,6 +100,18 @@ public class Parser {
             return parseGrade(arguments);
         case "remark":
             return parseRemark(arguments);
+        case "fee":
+            return parseFee(arguments);
+        case "paid":
+            return parsePaid(arguments);
+        case "unpaid":
+            return parseUnpaid(arguments);
+        case "upcoming":
+            return new UpcomingCommand();
+        case "remove-grade":
+            return parseRemoveGrade(arguments);
+        case "remove-remark":
+            return parseRemoveRemark(arguments);
         default:
             throw new TutorSwiftException("I'm sorry, but I don't know what '" + userInput + "' means :(\n");
         }
@@ -256,7 +279,7 @@ public class Parser {
         String endStr = getValueByPrefix(args, PREFIX_END);
 
         if (name == null || dayStr == null || startStr == null || endStr == null) {
-            throw new TutorSwiftException("Invalid format. Use: schedule n/NAME d/DAY s/HH:mm e/HH:mm");
+            throw new TutorSwiftException("Invalid format. Use: schedule n/NAME day/DAY start/HH:mm end/HH:mm");
         }
 
         try {
@@ -306,6 +329,30 @@ public class Parser {
         return new GradeCommand(index, assessment, score);
     }
 
+    private static Command parseRemoveGrade(String args) throws TutorSwiftException {
+        if (args.isEmpty()) {
+            throw new TutorSwiftException("Usage: remove-grade INDEX m/ASSESSMENT");
+        }
+
+        String[] parts = args.trim().split("\\s+", 2);
+
+        int index;
+        try {
+            index = Integer.parseInt(parts[0]);
+        } catch (NumberFormatException e) {
+            throw new TutorSwiftException("Invalid index.");
+        }
+
+        String remaining = parts.length > 1 ? parts[1] : "";
+        String assessment = getValueByPrefix(remaining, PREFIX_MARK);
+
+        if (assessment == null) {
+            throw new TutorSwiftException("Usage: remove-grade INDEX m/ASSESSMENT");
+        }
+
+        return new RemoveGradeCommand(index, assessment);
+    }
+
     private static Command parseRemark(String args) throws TutorSwiftException {
         if (args.isEmpty()) {
             throw new TutorSwiftException("Usage: remark INDEX r/REMARK");
@@ -329,5 +376,132 @@ public class Parser {
         }
 
         return new RemarkCommand(index, remark);
+    }
+
+    private static Command parseRemoveRemark(String args) throws TutorSwiftException {
+        if (args.isEmpty()) {
+            throw new TutorSwiftException("Usage: remove-remark INDEX");
+        }
+
+        int index;
+        try {
+            index = Integer.parseInt(args.trim());
+        } catch (NumberFormatException e) {
+            throw new TutorSwiftException("Invalid index.");
+        }
+
+        return new RemoveRemarkCommand(index);
+    }
+
+    /**
+     * Parses the "fee" command: fee INDEX f/AMOUNT
+     */
+    private static Command parseFee(String args) throws TutorSwiftException {
+        if (args.trim().isEmpty()) {
+            throw new TutorSwiftException("Usage: fee INDEX f/AMOUNT");
+        }
+
+        String[] parts = args.trim().split("\\s+", 2);
+        int index;
+        try {
+            index = Integer.parseInt(parts[0]);
+        } catch (NumberFormatException e) {
+            throw new TutorSwiftException("Invalid index. Usage: fee INDEX f/AMOUNT");
+        }
+
+        if (index <= 0) {
+            throw new TutorSwiftException("Index must be a positive integer.");
+        }
+
+        String remaining = parts.length > 1 ? parts[1] : "";
+        String feeStr = getValueByPrefix(remaining, PREFIX_FEE);
+
+        if (feeStr == null) {
+            throw new TutorSwiftException("Missing fee prefix. Usage: fee INDEX f/AMOUNT");
+        }
+
+        int fee;
+        try {
+            fee = Integer.parseInt(feeStr);
+        } catch (NumberFormatException e) {
+            throw new TutorSwiftException("Fee must be a positive integer.");
+        }
+
+        if (fee <= 0) {
+            throw new TutorSwiftException("Fee must be a positive integer.");
+        }
+
+        return new FeeCommand(index, fee);
+    }
+
+    /**
+     * Parses the "paid" command: paid INDEX [ym/YYYY-MM]
+     */
+    private static Command parsePaid(String args) throws TutorSwiftException {
+        int index = parseIndexFromArgs(args);
+        YearMonth month = parseYearMonth(args);
+        return new PaidCommand(index, month);
+    }
+
+    /**
+     * Parses the "unpaid" command: unpaid INDEX [ym/YYYY-MM]
+     */
+    private static Command parseUnpaid(String args) throws TutorSwiftException {
+        int index = parseIndexFromArgs(args);
+        YearMonth month = parseYearMonth(args);
+        return new UnpaidCommand(index, month);
+    }
+
+    /**
+     * Extracts the index from the start of args (before any prefixes).
+     */
+    private static int parseIndexFromArgs(String args) throws TutorSwiftException {
+        if (args.trim().isEmpty()) {
+            throw new TutorSwiftException("This command requires a numeric index!");
+        }
+        String[] parts = args.trim().split("\\s+", 2);
+        try {
+            int index = Integer.parseInt(parts[0]);
+            if (index <= 0) {
+                throw new TutorSwiftException("Index must be a positive integer.");
+            }
+            return index;
+        } catch (NumberFormatException e) {
+            throw new TutorSwiftException("Please provide a valid positive integer as index.");
+        }
+    }
+
+    /**
+     * Extracts ym/YYYY-MM from args, defaulting to current month if not present.
+     * Validates that the format is exactly YYYY-MM and month is between 01 and 12.
+     */
+    private static YearMonth parseYearMonth(String args) throws TutorSwiftException {
+        boolean prefixPresent = args.contains(PREFIX_PERIOD);
+        String ymStr = getValueByPrefix(args, PREFIX_PERIOD);
+
+        if (!prefixPresent) {
+            throw new TutorSwiftException("Missing ym/ prefix. Usage: paid/unpaid INDEX ym/YYYY-MM");
+        }
+
+        if (ymStr == null) {
+            throw new TutorSwiftException("ym/ requires a value. Usage: paid/unpaid INDEX ym/YYYY-MM");
+        }
+
+        if (!ymStr.trim().matches("\\d{4}-\\d{2}")) {
+            throw new TutorSwiftException("Invalid format. Use ym/YYYY-MM (e.g. ym/2026-03).");
+        }
+
+        try {
+            YearMonth ym = YearMonth.parse(ymStr.trim());
+            int month = ym.getMonthValue();
+            if (month < 1 || month > 12) {
+                throw new TutorSwiftException("Invalid month. Month must be between 01 and 12.");
+            }
+            return ym;
+        } catch (TutorSwiftException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new TutorSwiftException("Invalid year-month. Use ym/YYYY-MM (e.g. ym/2026-03).");
+        }
     }
 }

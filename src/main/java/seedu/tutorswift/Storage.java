@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.time.YearMonth;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -109,7 +110,7 @@ public class Storage {
 
     /**
      * Decodes a line of text into a Student object.
-     * Format: Name | Level | Subject | isArchived
+     * Format: Name | Level | Subject | isArchived | grades | remark | feeRecord
      */
     private Student parseLineToStudent(String line) throws TutorSwiftException {
         String[] parts = line.split("\\s*\\|\\s*");
@@ -133,6 +134,23 @@ public class Storage {
                 }
             }
         }
+
+        if (parts.length >= 6 && !parts[5].trim().equals("NONE")) {
+            s.setRemark(parts[5].trim());
+        }
+
+        if (parts.length >= 7) {
+            try {
+                FeeRecord fee = FeeRecord.fromSaveFormat(parts[6].trim());
+                s.getFeeRecord().setFeePerLesson(fee.getFeePerLesson());
+                for (YearMonth ym : fee.getPaidMonths()) {
+                    s.markPaid(ym);
+                }
+            } catch (Exception e) {
+                logger.log(Level.WARNING, "Could not parse fee record for: " + name);
+            }
+        }
+
         return s;
     }
 }
