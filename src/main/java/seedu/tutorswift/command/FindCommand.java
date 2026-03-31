@@ -47,9 +47,9 @@ public class FindCommand extends Command {
         assert students != null : "StudentList cannot be null";
         ArrayList<Student> results = new ArrayList<>();
 
-        // Searchs the active student list
+        // Searches the active student list
         searchList(students.getAllActive(), results);
-        // Searchs the archived student list
+        // Searches the archived student list
         searchList(students.getAllArchived(), results);
 
         ui.showFindResults(results);
