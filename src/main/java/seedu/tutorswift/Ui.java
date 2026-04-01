@@ -258,6 +258,7 @@ public class Ui {
      */
     public void showEmptyUpcomingLessons() {
         System.out.println("You have no upcoming lessons scheduled.");
+        System.out.println(LINE_DIVIDER);
     }
 
     /**
@@ -280,6 +281,7 @@ public class Ui {
         }
 
         System.out.println(output.toString().trim());
+        System.out.println(LINE_DIVIDER);
     }
 
     /**
@@ -290,6 +292,7 @@ public class Ui {
      */
     public void showLessonScheduled(String studentName, Lesson lesson) {
         System.out.println("Got it! I've scheduled a lesson for " + studentName + " on " + lesson);
+        System.out.println(LINE_DIVIDER);
     }
 
     /**

@@ -9,152 +9,100 @@
 Welcome to TutorSwift! We'll help you manage your students efficiently!
 How can I help you?
 ____________________________________________________________
-I'm sorry, but I don't know what 'test' means :(
-
+I'm sorry, but I don't know what 'invalid command' means :(
+Please enter a valid command.
+Here is the TutorSwift usage guide:
+  add            - Adds a new student
+  edit           - Edits an existing student's details
+  delete         - Removes a student from the active list
+  find           - Finds students by keyword
+  list           - Displays all active students
+  grade          - Adds a grade for a student
+  remove-grade   - Removes a specific grade from a student
+  remark         - Adds a remark for a student
+  remove-remark  - Removes the remark from a student
+  fee            - Sets the per-lesson fee for a student
+  paid           - Marks a student's fee as paid for a month
+  unpaid         - Marks a student's fee as unpaid for a month
+  schedule       - Schedules a new lesson for a student
+  upcoming       - Shows your lesson schedule for the next 7 days
+  archive        - Moves a student to the archive
+  unarchive      - Restores a student from the archive
+  list-archive   - Displays all archived students
+  delete-archive - Permanently removes a student from the archive
+  bye            - Exits the application
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this student:
-    John Doe | Secondary 2 | Math | Fee: Not set | No payments recorded
+    Alice Lim | Secondary 3 | Math | Fee: Not set | No payments recorded
  Now you have 1 students in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this student:
-    Alice Tan | P6 | English | Fee: Not set | No payments recorded
+    Bob Tan | Primary 5 | Science | Fee: Not set | No payments recorded
  Now you have 2 students in the list.
 ____________________________________________________________
 ____________________________________________________________
  Here are the ACTIVE students in your list:
-1. John Doe | Secondary 2 | Math | Fee: Not set | No payments recorded
-2. Alice Tan | P6 | English | Fee: Not set | No payments recorded
+1. Alice Lim | Secondary 3 | Math | Fee: Not set | No payments recorded
+2. Bob Tan | Primary 5 | Science | Fee: Not set | No payments recorded
 ____________________________________________________________
 ____________________________________________________________
  Done! I've updated the details for this student:
-    John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: Not set | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Done! I've updated the details for this student:
-    Alice Tan | P6 | English | Grades: [Final: 92] | Fee: Not set | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Here are the ACTIVE students in your list:
-1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: Not set | No payments recorded
-2. Alice Tan | P6 | English | Grades: [Final: 92] | Fee: Not set | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Done! I've updated the details for this student:
-    Alex Tan | P6 | Science | Fee: Not set | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Here are the ACTIVE students in your list:
-1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: Not set | No payments recorded
-2. Alex Tan | P6 | Science | Fee: Not set | No payments recorded
-____________________________________________________________
-____________________________________________________________
- [Archive Success] This student has been moved to archive:
-    John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: Not set | No payments recorded [ARCHIVED]
-____________________________________________________________
-____________________________________________________________
- Here are the ACTIVE students in your list:
-1. Alex Tan | P6 | Science | Fee: Not set | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Here are the ARCHIVED students:
-1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: Not set | No payments recorded [ARCHIVED]
-____________________________________________________________
-____________________________________________________________
- [Unarchive Success] Student moved back to active list:
-    John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: Not set | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Here are the ACTIVE students in your list:
-1. Alex Tan | P6 | Science | Fee: Not set | No payments recorded
-2. John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: Not set | No payments recorded
-____________________________________________________________
-____________________________________________________________
- [Archive Success] This student has been moved to archive:
-    Alex Tan | P6 | Science | Fee: Not set | No payments recorded [ARCHIVED]
-____________________________________________________________
-____________________________________________________________
- [Done] Permanently removed this student from ARCHIVE:
-    Alex Tan | P6 | Science | Fee: Not set | No payments recorded [ARCHIVED]
- Now you have 0 students in your archive.
-____________________________________________________________
-____________________________________________________________
- Your archive is currently empty.
-____________________________________________________________
-____________________________________________________________
- Got it. I've added this student:
-    Bob Lee | Secondary 3 | Physics | Fee: Not set | No payments recorded
- Now you have 2 students in the list.
-____________________________________________________________
-____________________________________________________________
- Here are the ACTIVE students in your list:
-1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: Not set | No payments recorded
-2. Bob Lee | Secondary 3 | Physics | Fee: Not set | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Done! I've updated the details for this student:
-    Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Fee: Not set | No payments recorded
+    Alice Lim | Secondary 4 | Math | Fee: Not set | No payments recorded
 ____________________________________________________________
 ____________________________________________________________
  Done! I've added a remark for this student:
-    Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts | Fee: Not set | No payments recorded
+    Alice Lim | Secondary 4 | Math | Remark: Needs help with algebra | Fee: Not set | No payments recorded
 ____________________________________________________________
 ____________________________________________________________
- Here are the ACTIVE students in your list:
-1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: Not set | No payments recorded
-2. Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts | Fee: Not set | No payments recorded
+ Done! Fee per lesson for Alice Lim set to $50/lesson.
+    Alice Lim | Secondary 4 | Math | Remark: Needs help with algebra | Fee: $50/lesson | No payments recorded
+____________________________________________________________
+____________________________________________________________
+ Done! Alice Lim is marked as PAID for APRIL 2026.
+    Alice Lim | Secondary 4 | Math | Remark: Needs help with algebra | Fee: $50/lesson | APRIL 2026: [PAID]
+____________________________________________________________
+____________________________________________________________
+ Done! Alice Lim is marked as UNPAID for APRIL 2026.
+    Alice Lim | Secondary 4 | Math | Remark: Needs help with algebra | Fee: $50/lesson | No payments recorded
+____________________________________________________________
+Got it! I've scheduled a lesson for Alice Lim on MONDAY 15:00 to 17:00
+____________________________________________________________
+Here are your upcoming lessons for the next 7 days:
+- MONDAY 15:00 to 17:00 | Alice Lim (Math)
+____________________________________________________________
+____________________________________________________________
+ Done! I've updated the details for this student:
+    Alice Lim | Secondary 4 | Math | Grades: [Midterm: 85] | Lessons: [MONDAY 15:00 to 17:00] | Remark: Needs help with algebra | Fee: $50/lesson | No payments recorded
+____________________________________________________________
+____________________________________________________________
+ Done! I've updated the details for this student:
+    Alice Lim | Secondary 4 | Math | Lessons: [MONDAY 15:00 to 17:00] | Remark: Needs help with algebra | Fee: $50/lesson | No payments recorded
+____________________________________________________________
+____________________________________________________________
+ Done! I've updated the details for this student:
+    Alice Lim | Secondary 4 | Math | Lessons: [MONDAY 15:00 to 17:00] | Fee: $50/lesson | No payments recorded
+____________________________________________________________
+____________________________________________________________
+Here are the matching students:
+1. Bob Tan | Primary 5 | Science | Fee: Not set | No payments recorded
 ____________________________________________________________
 ____________________________________________________________
  [Archive Success] This student has been moved to archive:
-    Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts | Fee: Not set | No payments recorded [ARCHIVED]
+    Bob Tan | Primary 5 | Science | Fee: Not set | No payments recorded [ARCHIVED]
 ____________________________________________________________
 ____________________________________________________________
  Here are the ARCHIVED students:
-1. Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts | Fee: Not set | No payments recorded [ARCHIVED]
+1. Bob Tan | Primary 5 | Science | Fee: Not set | No payments recorded [ARCHIVED]
 ____________________________________________________________
 ____________________________________________________________
  [Unarchive Success] Student moved back to active list:
-    Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts | Fee: Not set | No payments recorded
+    Bob Tan | Primary 5 | Science | Fee: Not set | No payments recorded
 ____________________________________________________________
 ____________________________________________________________
- Here are the ACTIVE students in your list:
-1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: Not set | No payments recorded
-2. Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts | Fee: Not set | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Done! Fee per lesson for John Doe set to $70/lesson.
-    John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: $70/lesson | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Done! Fee per lesson for Bob Lee set to $50/lesson.
-    Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts | Fee: $50/lesson | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Here are the ACTIVE students in your list:
-1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: $70/lesson | No payments recorded
-2. Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts | Fee: $50/lesson | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Done! John Doe is marked as PAID for MARCH 2026.
-    John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: $70/lesson | MARCH 2026: [PAID]
-____________________________________________________________
-____________________________________________________________
- Done! Bob Lee is marked as PAID for FEBRUARY 2026.
-    Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts | Fee: $50/lesson | FEBRUARY 2026: [PAID]
-____________________________________________________________
-____________________________________________________________
- Here are the ACTIVE students in your list:
-1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: $70/lesson | MARCH 2026: [PAID]
-2. Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts | Fee: $50/lesson | FEBRUARY 2026: [PAID]
-____________________________________________________________
-____________________________________________________________
- Done! John Doe is marked as UNPAID for MARCH 2026.
-    John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: $70/lesson | No payments recorded
-____________________________________________________________
-____________________________________________________________
- Here are the ACTIVE students in your list:
-1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85] | Fee: $70/lesson | No payments recorded
-2. Bob Lee | Secondary 3 | Physics | Grades: [Quiz: 78] | Remark: Struggles with concepts | Fee: $50/lesson | FEBRUARY 2026: [PAID]
+ Done! I've removed this student:
+    Bob Tan | Primary 5 | Science | Fee: Not set | No payments recorded
+ Now you have 1 students in the list.
 ____________________________________________________________
 Goodbye! Thanks for using TutorSwift.

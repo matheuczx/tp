@@ -1,35 +1,20 @@
-test
-add n/John Doe l/Secondary 2 sub/Math
-add n/Alice Tan l/P6 sub/English
+invalid command
+add n/Alice Lim l/Secondary 3 sub/Math
+add n/Bob Tan l/Primary 5 sub/Science
 list
+edit 1 l/Secondary 4
+remark 1 r/Needs help with algebra
+fee 1 f/50
+paid 1 ym/2026-04
+unpaid 1 ym/2026-04
+schedule n/Alice Lim day/MONDAY start/15:00 end/17:00
+upcoming
 grade 1 m/Midterm g/85
-grade 2 m/Final g/92
-list
-edit 2 n/Alex Tan sub/Science
-list
-archive 1
-list
-list-archive
-unarchive 1
-list
-archive 1
-delete-archive 1
-list-archive
-add n/Bob Lee l/Secondary 3 sub/Physics
-list
-grade 2 m/Quiz g/78
-remark 2 r/Struggles with concepts
-list
+remove-grade 1 m/Midterm
+remove-remark 1
+find n/Bob
 archive 2
 list-archive
 unarchive 1
-list
-fee 1 f/70
-fee 2 f/50
-list
-paid 1 ym/2026-03
-paid 2 ym/2026-02
-list
-unpaid 1 ym/2026-03
-list
+delete 2
 bye
