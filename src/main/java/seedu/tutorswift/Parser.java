@@ -57,6 +57,28 @@ public class Parser {
         PREFIX_PERIOD
     };
 
+    public static final String USAGE_GUIDE = "Please enter a valid command.\n"
+            + "Here is the TutorSwift usage guide:\n"
+            + "  add            - Adds a new student\n"
+            + "  edit           - Edits an existing student's details\n"
+            + "  delete         - Removes a student from the active list\n"
+            + "  find           - Finds students by keyword\n"
+            + "  list           - Displays all active students\n"
+            + "  grade          - Adds a grade for a student\n"
+            + "  remove-grade   - Removes a specific grade from a student\n"
+            + "  remark         - Adds a remark for a student\n"
+            + "  remove-remark  - Removes the remark from a student\n"
+            + "  fee            - Sets the per-lesson fee for a student\n"
+            + "  paid           - Marks a student's fee as paid for a month\n"
+            + "  unpaid         - Marks a student's fee as unpaid for a month\n"
+            + "  schedule       - Schedules a new lesson for a student\n"
+            + "  upcoming       - Shows your lesson schedule for the next 7 days\n"
+            + "  archive        - Moves a student to the archive\n"
+            + "  unarchive      - Restores a student from the archive\n"
+            + "  list-archive   - Displays all archived students\n"
+            + "  delete-archive - Permanently removes a student from the archive\n"
+            + "  bye            - Exits the application";
+
     /**
      * Parses the full user input string and returns the corresponding command.
      *
@@ -65,8 +87,7 @@ public class Parser {
      */
     public static Command parseUserInput(String userInput)  throws TutorSwiftException {
         if (userInput.trim().isEmpty()) {
-            throw new TutorSwiftException("Please enter a command."
-                    + " Here are the available commands: add, edit, delete, list, exit.");
+            throw new TutorSwiftException(USAGE_GUIDE);
         }
 
         String[] parts = userInput.trim().split(" ", 2);
@@ -113,7 +134,8 @@ public class Parser {
         case "remove-remark":
             return parseRemoveRemark(arguments);
         default:
-            throw new TutorSwiftException("I'm sorry, but I don't know what '" + userInput + "' means :(\n");
+            throw new TutorSwiftException("I'm sorry, but I don't know what '"
+                    + userInput + "' means :(\n" + USAGE_GUIDE);
         }
     }
 
@@ -142,7 +164,7 @@ public class Parser {
         assert args != null : "Parser should not receive a null string from readUserInput";
         if (args.isEmpty()) {
             throw new TutorSwiftException("Edit command requires an index!"
-                    + " Usage: edit INDEX n/NAME l/LEVEL s/SUBJECT");
+                    + " Usage: edit INDEX n/NAME l/ACADEMIC_LEVEL sub/SUBJECT");
         }
 
         // Extract the index (the first number before any prefixes)
@@ -185,7 +207,7 @@ public class Parser {
      */
     private static Command parseAdd(String args) throws TutorSwiftException {
         if (args.isEmpty()) {
-            throw new TutorSwiftException("The add command must have name (n/), level (l/), and subject (s/)!");
+            throw new TutorSwiftException("The add command must have name (n/), level (l/), and subject (sub/)!");
         }
 
         String name = getValueByPrefix(args, PREFIX_NAME);
@@ -193,7 +215,7 @@ public class Parser {
         String subject = getValueByPrefix(args, PREFIX_SUBJECT);
 
         if (name == null || level == null || subject == null) {
-            throw new TutorSwiftException("Missing parameters! Usage: add n/NAME l/LEVEL s/SUBJECT");
+            throw new TutorSwiftException("Missing parameters! Usage: add n/NAME l/LEVEL sub/SUBJECT");
         }
 
         Student newStudent = new Student(name, level, subject);
@@ -258,7 +280,7 @@ public class Parser {
         assert args != null : "Arguments should not be null";
 
         if (args.isEmpty()) {
-            throw new TutorSwiftException("Find command requires at least one prefix (n/, s/, l/).");
+            throw new TutorSwiftException("Find command requires at least one prefix (n/, sub/, l/).");
         }
 
         String name = getValueByPrefix(args, PREFIX_NAME);
@@ -266,7 +288,7 @@ public class Parser {
         String subject = getValueByPrefix(args, PREFIX_SUBJECT);
 
         if (name == null && subject == null && level == null) {
-            throw new TutorSwiftException("Please provide at least one search field (n/(name), s/(subject), l/(lvl).");
+            throw new TutorSwiftException("Provide at least one search field n/NAME, sub/SUBJECT, l/ACADEMIC_LEVEL.");
         }
 
         return new FindCommand(name, subject, level);
