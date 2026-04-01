@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.time.YearMonth;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -110,7 +112,7 @@ public class Storage {
 
     /**
      * Decodes a line of text into a Student object.
-     * Format: Name | Level | Subject | isArchived | grades | remark | feeRecord
+     * Format: Name | Level | Subject | isArchived | grades | lessons | remark | feeRecord
      */
     private Student parseLineToStudent(String line) throws TutorSwiftException {
         String[] parts = line.split("\\s*\\|\\s*");
@@ -125,6 +127,7 @@ public class Storage {
 
         Student s = new Student(name, level, subject);
         s.setArchived(isArchived);
+
         if (parts.length >= 5 && !parts[4].equals("EMPTY")) {
             String[] gradeEntries = parts[4].split(",");
             for (String entry : gradeEntries) {
@@ -135,13 +138,30 @@ public class Storage {
             }
         }
 
-        if (parts.length >= 6 && !parts[5].trim().equals("NONE")) {
-            s.setRemark(parts[5].trim());
+        if (parts.length >= 6 && !parts[5].trim().equals("EMPTY")) {
+            String[] lessonEntries = parts[5].split(",");
+            for (String entry : lessonEntries) {
+                String[] lessonParts = entry.split(":");
+                if (lessonParts.length >= 5) {
+                    try {
+                        DayOfWeek day = DayOfWeek.valueOf(lessonParts[0]);
+                        LocalTime start = LocalTime.parse(lessonParts[1] + ":" + lessonParts[2]);
+                        LocalTime end = LocalTime.parse(lessonParts[3] + ":" + lessonParts[4]);
+                        s.addLesson(new Lesson(day, start, end));
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Could not parse lesson entry: " + entry);
+                    }
+                }
+            }
         }
 
-        if (parts.length >= 7) {
+        if (parts.length >= 7 && !parts[6].trim().equals("NONE")) {
+            s.setRemark(parts[6].trim());
+        }
+
+        if (parts.length >= 8) {
             try {
-                FeeRecord fee = FeeRecord.fromSaveFormat(parts[6].trim());
+                FeeRecord fee = FeeRecord.fromSaveFormat(parts[7].trim());
                 s.getFeeRecord().setFeePerLesson(fee.getFeePerLesson());
                 for (YearMonth ym : fee.getPaidMonths()) {
                     s.markPaid(ym);

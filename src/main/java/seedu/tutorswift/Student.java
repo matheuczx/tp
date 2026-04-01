@@ -218,8 +218,24 @@ public class Student {
             }
         }
         String gradeFinal = gradeStr.length() == 0 ? "EMPTY" : gradeStr.toString();
+
         String remarkFinal = (remark == null) ? "NONE" : remark;
+
+        StringBuilder lessonStr = new StringBuilder();
+        for (int i = 0; i < lessons.size(); i++) {
+            Lesson l = lessons.get(i);
+            lessonStr.append(l.getDay().name())
+                    .append(":")
+                    .append(l.getStartTime().toString())
+                    .append(":")
+                    .append(l.getEndTime().toString());
+            if (i < lessons.size() - 1) {
+                lessonStr.append(",");
+            }
+        }
+        String lessonFinal = lessonStr.isEmpty() ? "EMPTY" : lessonStr.toString();
+
         return name + " | " + academicLevel + " | " + subject + " | " + isArchived
-                + " | " + gradeFinal + " | " + remarkFinal + " | " + feeRecord.toSaveFormat();
+                + " | " + gradeFinal + "|" + lessonFinal + "|" + remarkFinal + " | " + feeRecord.toSaveFormat();
     }
 }
