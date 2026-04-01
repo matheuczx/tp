@@ -152,6 +152,23 @@ Examples of usage:
 
 - `upcoming` Displays the tutor's sorted lesson schedule for the upcoming week.
 
+### Exiting the application: `bye`
+
+Exits the application.
+
+Format: `bye`
+
+- This command closes TutorSwift safely.
+
+- Any existing data will be saved before exiting.
+
+Examples of usage:
+
+- `bye`
+
+Expected behaviour:
+- The application terminates
+
 ## FAQ
 
 **Q**: How do I transfer my data to another computer? 
@@ -165,8 +182,9 @@ Examples of usage:
 | Action     | Format                                                          | Examples                                            |
 |------------|-----------------------------------------------------------------|-----------------------------------------------------|
 | Edit       | `edit INDEX [n/NAME] [l/ACADEMIC_LEVEL] [sub/SUBJECT]`          | `edit 1 n/Jane Doe l/Secondary 2 sub/Science`       |
-| Add Grade  | `grade INDEX m/ASSESSMENT g/SCORE`                              |                                                     |
-| Add Remark | `remark INDEX r/REMARK`                                         |                                                     |
+| Add Grade  | `grade INDEX m/ASSESSMENT g/SCORE`                              | `grade 1 m/Midterm g/85`                            |
+| Add Remark | `remark INDEX r/REMARK`                                         | `remark 1 r/Very hardworking student`               |
 | Schedule   | `schedule n/NAME day/DAY_OF_WEEK start/START_TIME end/END_TIME` | `schedule n/Alice day/Monday start/10:00 end/12:00` |
 | Upcoming   | `upcoming`                                                      | -                                                   |
+| Exit       | `bye`                                                           | -                                                   |
 

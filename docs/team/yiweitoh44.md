@@ -36,11 +36,14 @@ It is designed to streamline administrative tasks such as tracking student perfo
 ### Contributions to the User Guide
 
 - Set up the initial structure and skeleton of the User Guide.
-- Wrote documentation for commands: `grade`, `remark`
+- Wrote documentation for commands: `grade`, `remark`, `bye`
 
 ### Contributions to the Developer Guide
 
-- Not done yet
+- Documented the implementation of the `grade` feature.
+- Wrote a step-by-step usage scenario to clearly illustrate how the `grade` command is processed within the system.
+- Added a sequence diagram to visualise the interaction between system components during a grade operation.
+- Provided design considerations comparing alternative approaches.
 
 ### Contributions to team-based tasks
 
