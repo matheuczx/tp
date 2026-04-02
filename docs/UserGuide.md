@@ -255,6 +255,24 @@ Expected behaviour:
 - Grade is stored as [ASSESSMENT:SCORE]
 - Student details will display updated grades
 
+### Removing a grade: `remove-grade`
+
+Removes a grade record from a student.
+
+Format: `remove-grade INDEX m/ASSESSMENT`
+
+* The `INDEX` must be a valid student number.
+* The `m/` prefix is required.
+* The specified assessment must exist for the student.
+
+Example of usage:
+`remove-grade 1 m/Midterm`
+
+Expected behaviour:
+- Removes the specified grade from the student
+- Student details will display updated grades
+- If the assessment does not exist, an appropriate error message is shown
+
 ### Adding a remark: `remark`
 
 Adds a remark to a student.
@@ -271,6 +289,22 @@ Example of usage:
 Expected behaviour:
 - Adds or updates the remark for the student
 - Displays updated student details
+
+### Removing a remark: `remove-remark`
+
+Removes the remark from a student.
+
+Format: `remove-remark INDEX`
+
+* The `INDEX` must be a valid student number.
+
+Example of usage:
+`remove-remark 1`
+
+Expected behaviour:
+- Removes the existing remark for the student
+- Student details will display without a remark
+- If no remark exists, an appropriate message is shown
 
 ### Scheduling a lesson: `schedule`
 
@@ -424,23 +458,25 @@ Unpaid months are intentionally not shown to keep the display clean and unclutte
 ## Command Summary
 
 
-| Action | Format                                                          | Examples                                            |
-|-------|-----------------------------------------------------------------|-----------------------------------------------------|
-| Add Student | `add n/NAME l/LEVEL sub/SUBJECT` | `add n/John Doe l/Secondary 2 sub/Math`             |
-| List Active | `list` | `list`                                              |
-| Edit Student | `edit INDEX [n/NAME] [l/LEVEL] [sub/SUBJECT]` | `edit 1 n/Jane Doe l/Secondary 2 sub/Science`       |
-| Delete Active | `delete INDEX` | `delete 1`                                          |
-| Find | `find [n/NAME] [sub/SUBJECT] [l/LEVEL]` | `find n/John sub/Math`                              |
-| Archive | `archive INDEX` | `archive 1`                                         |
-| List Archive | `list-archive` | `list-archive`                                      |
-| Unarchive | `unarchive INDEX` | `unarchive 1`                                       |
+| Action         | Format                                                        | Examples                                            |
+|----------------|---------------------------------------------------------------|-----------------------------------------------------|
+| Add Student    | `add n/NAME l/LEVEL sub/SUBJECT` | `add n/John Doe l/Secondary 2 sub/Math`             |
+| List Active    | `list` | `list`                                              |
+| Edit Student   | `edit INDEX [n/NAME] [l/LEVEL] [sub/SUBJECT]` | `edit 1 n/Jane Doe l/Secondary 2 sub/Science`       |
+| Delete Active  | `delete INDEX` | `delete 1`                                          |
+| Find           | `find [n/NAME] [sub/SUBJECT] [l/LEVEL]` | `find n/John sub/Math`                              |
+| Archive        | `archive INDEX` | `archive 1`                                         |
+| List Archive   | `list-archive` | `list-archive`                                      |
+| Unarchive      | `unarchive INDEX` | `unarchive 1`                                       |
 | Delete Archive | `delete-archive INDEX` | `delete-archive 1`                                  |
-| Add Grade | `grade INDEX m/ASSESSMENT g/SCORE`                              | `grade 1 m/Midterm g/85`                            |
-| Add Remark | `remark INDEX r/REMARK`                                         | `remark 1 r/Very hardworking student`               |
-| Schedule | `schedule n/NAME day/DAY_OF_WEEK start/START_TIME end/END_TIME` | `schedule n/Alice day/Monday start/10:00 end/12:00` |
-| Upcoming | `upcoming`                                                      | `upcoming`                                          |
-| Set Fee | `fee INDEX f/AMOUNT`                                            | `fee 1 f/50`                                        |
-| Mark as Paid | `paid INDEX ym/YYYY-MM`                                         | `paid 1 ym/2026-04`                                 |
-| Mark as Unpaid | `unpaid INDEX ym/YYYY-MM`                                       | `unpaid 1 ym/2026-04`                               |
-| Exit  | `bye`                                                           | `bye`                                                 |
+| Add Grade      | `grade INDEX m/ASSESSMENT g/SCORE`                            | `grade 1 m/Midterm g/85`                            |
+| Add Remark     | `remark INDEX r/REMARK`                                       | `remark 1 r/Very hardworking student`               |
+| Remove Grade   | `remove-grade INDEX m/ASSESSMENT`                            | `remove-grade 1 m/Midterm`                          |
+| Remove Remark  | `remove-remark INDEX`                                       | `remove-remark 1`                                   |
+| Schedule       | `schedule n/NAME day/DAY_OF_WEEK start/START_TIME end/END_TIME` | `schedule n/Alice day/Monday start/10:00 end/12:00` |
+| Upcoming       | `upcoming`                                                    | `upcoming`                                           |
+| Set Fee        | `fee INDEX f/AMOUNT`                                          | `fee 1 f/50`                                        |
+| Mark as Paid   | `paid INDEX ym/YYYY-MM`                                       | `paid 1 ym/2026-04`                                 |
+| Mark as Unpaid | `unpaid INDEX ym/YYYY-MM`                                     | `unpaid 1 ym/2026-04`                               |
+| Exit           | `bye`                                                         | `bye`                                               |
 

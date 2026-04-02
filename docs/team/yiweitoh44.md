@@ -26,17 +26,19 @@ It is designed to streamline administrative tasks such as tracking student perfo
 
 **4. Grade Management System**
 - Implemented the `grade` command to allow tutors to record student assessment results.
+- Implemented the `remove-grade` command to allow tutors to delete specific assessment records.
 - Designed parsing logic to handle structured inputs (e.g. m/ASSESSMENT g/SCORE).
 - Ensured data is stored and displayed correctly within each student profile.
 
 **5. Remark Feature**
 - Implemented the `remark` command to allow tutors to store qualitative feedback.
+- Implemented the `remove-remark` command to allow tutors to delete existing remarks.
 - Designed overwrite behaviour to ensure only one remark is stored per student.
 
 ### Contributions to the User Guide
 
 - Set up the initial structure and skeleton of the User Guide.
-- Wrote documentation for commands: `grade`, `remark`, `bye`
+- Wrote documentation for commands: `grade`, `remark`, `remove-grade`, `remove-remark`, `bye`
 
 ### Contributions to the Developer Guide
 
