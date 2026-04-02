@@ -1,11 +1,8 @@
 # Chen Zhendong's Project Portfolio Page
 
-## Project: TutorSwift
 ## Overview
 
-TutorSwift is a command-line application for private tutors to manage student records, including lessons, grades, and payments.
-
-It is designed to streamline administrative tasks such as tracking student performance and managing lesson schedules efficiently through a CLI interface.
+TutorSwift is a CLI-based desktop application for private tutors to manage students, lessons, and payments. It streamlines administrative tasks through a fast, text-based interface optimized for efficient data entry.
 
 Given below are my contributions to the project.
 
@@ -16,53 +13,50 @@ Given below are my contributions to the project.
 
 ### 2. Enhancements Implemented
 
-#### Major Enhancement: Core Student Management System (Add Command)
-*   **What it is**: Developed the primary data entry mechanism that allows tutors to register new student profiles into the system with structured attributes.
-*   **Features**: Implemented the `add` command, which supports mandatory prefixes for student names (`n/`), academic levels (`l/`), and subjects (`sub/`).
-*   **Justification**: This is the foundational feature of TutorSwift. Every other functionality—such as grade tracking, lesson scheduling, and financial management—depends on the accurate and structured entry of student data.
+#### Major Enhancement: Core Student Management (Add Command)
+*   **What it is**: Developed the primary mechanism for registering students with structured attributes.
+*   **Features**: Implemented the `add` command supporting mandatory prefixes (`n/`, `l/`, `sub/`).
+*   **Justification**: This is the foundation of TutorSwift; all subsequent features like grade tracking and scheduling depend on the accurate entry of this data.
 *   **Technical Depth**:
-    *   **Robust Input Parsing**: Integrated the command into a centralized `Parser` using custom prefix-extraction logic, allowing users to input parameters in any order, which enhances CLI flexibility.
-    *   **Data Integrity Validation**: Implemented strict defensive checks to prevent the addition of duplicate student names, ensuring that the database remains a reliable "single source of truth."
-    *   **Defensive Design**: Employed a combination of `TutorSwiftException` for handling user input errors and `assert` statements to verify internal state invariants during the student instantiation process.
+    *   **Flexible Parsing**: Integrated custom prefix-extraction logic to allow parameters in any order, enhancing CLI usability.
+    *   **Data Integrity**: Implemented strict defensive checks to prevent duplicate student names.
+    *   **Defensive Design**: Utilized a combination of `TutorSwiftException` for user errors and `assert` statements to verify internal logic during instantiation.
 
 #### Major Enhancement: Student Archiving System
-*   **What it is**: Introduced a dual-list architecture to manage "Active" vs. "Archived" students.
+*   **What it is**: Introduced a dual-list architecture to separate active students from historical records.
 *   **Features**: Implemented `archive`, `unarchive`, `list-archive`, and `delete-archive` commands.
-*   **Justification**: Tutors frequently deal with students who stop tuition or graduate. This system allows tutors to keep their primary workspace clean while preserving historical records (grades, remarks, etc.) for future reference.
+*   **Justification**: Tutors need to preserve the history of graduated students without cluttering their primary workspace.
 *   **Technical Depth**:
-    *   Refactored the core `StudentList` to handle two separate internal `ArrayList` objects.
-    *   Ensured data integrity by validating indices across different lists.
-    *   Upgraded the `find` command to search across both active and archived repositories simultaneously.
+    *   **List Refactoring**: Refactored `StudentList` to manage two internal `ArrayList` objects efficiently.
+    *   **Index Validation**: Ensured data safety by validating student indices across distinct lists.
+    *   **Comprehensive Retrieval**: Upgraded the `find` command to search across both active and archived repositories simultaneously.
 
 #### Major Enhancement: Persistent Local Storage
-*   **What it is**: Developed the `Storage` component to automatically save and load student data to a local text file (`./data/tutorswift.txt`).
-*   **Justification**: Manual saving is prone to human error. This feature ensures no data is lost even if the application is closed unexpectedly.
+*   **What it is**: Developed the `Storage` component for automatic data persistence to `./data/tutorswift.txt`.
+*   **Justification**: Ensures a seamless experience where data is preserved automatically even if the application closes unexpectedly.
 *   **Technical Depth**:
-    *   Designed a custom pipe-separated encoding format: `Name | Level | Subject | isArchived | Grades | Remark | FeeRecord`.
-    *   **Robustness**: Implemented a "skip-and-log" mechanism for corrupted lines in the storage file, preventing a single malformed entry from crashing the entire database.
-    *   **Infrastructure**: Added automatic directory and file creation logic on startup.
+    *   **Nested Data Encoding**: Designed a pipe-separated format capable of storing complex attributes like grades and fee records.
+    *   **Robustness**: Implemented a "skip-and-log" mechanism to handle corrupted data lines without crashing the application.
+    *   **Automation**: Added automatic directory and file creation logic upon startup.
 
-#### Minor Enhancement: System Logging and Console Clean-up
-*   Integrated `java.util.logging` to track key events.
-*   Configured the root logger to suppress system-level `INFO` red-text from the console, providing a cleaner, more professional CLI experience for the user while maintaining diagnostic capabilities in the background.
+#### Minor Enhancement: System Logging and UX Optimization
+*   Integrated `java.util.logging` and configured a custom filter to suppress system `INFO` red-text from the console, providing a cleaner CLI experience while maintaining diagnostic records.
 
 ### 3. Contributions to the User Guide (UG)
-*   Documented the **Adding a Student** feature, emphasizing unique name constraints.
-*   Wrote the detailed section for the **Archiving System**, explaining the workflow between active and archived views.
-*   Summarized the **Data Persistence(Storage)** behavior to reassure users about data safety.
-*   Updated the **Command Summary** table to include v2.0 features.
+*   Documented the **Add Student** and **Archiving System** features.
+*   Summarized **Data Persistence** behavior and safety.
+*   Standardized the **Command Summary** table for v2.0.
 
 ### 4. Contributions to the Developer Guide (DG)
-*   Wrote the implementation details for the **Archive Student Feature**.
-*   Wrote the implementation details for the **Storage Feature**, including design logic for post-command persistence.
-*   **UML Diagrams**: Created the **Sequence Diagram for Archiving** and the **Sequence Diagram for Storage Saving**.
-*   **Design Considerations**: Documented the trade-offs between "Dual-List Management" vs. "Flag-based Filtering."
+*   Documented implementation details for **Archive** and **Storage** features.
+*   Created **Sequence Diagrams** for the archiving operation and automatic saving logic.
+*   Authored design considerations regarding **Dual-List Management**.
 
 ### 5. Contributions to Team-Based Tasks
-*   **Integration Support**: Refactored teammates' commands (e.g., `ScheduleCommand`, `GradeCommand`) to maintain compatibility with the new `StudentList` API after my major refactoring.
-*   **Conflict Resolution**: Took the lead in resolving complex merge conflicts in the `Student` class when Archiving, Grade, and Lesson features overlapped.
-*   **Release Management**: Verified the `v1.0` Shadow JAR on different computers.
+*   **Refactoring Support**: Updated teammates' commands to match the new `StudentList` API.
+*   **Conflict Resolution**: Led the resolution of complex merge conflicts in the `Student` class.
+*   **Release Management**: Verified Shadow JAR compatibility across different computers.
 
 ### 6. Review/Mentoring Contributions
-*   Reviewed PRs, providing feedback on Javadoc completeness and the Single Level of Abstraction Principle (SLAP).
-*   Assisted teammates in resolving Checkstyle formatting errors (e.g., Indentation and Newline issues) during the CI process.
+*   Reviewed PRs, focusing on SLAP and Javadoc completeness.
+*   Assisted teammates in resolving **Checkstyle** errors and CI pipeline failures.
