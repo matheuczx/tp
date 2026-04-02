@@ -1,5 +1,34 @@
 # Developer Guide
 
+---
+
+## Table of Contents
+
+* [Design](#design)
+  * [System Architecture](#system-architecture)
+  * [UI Component](#ui-component)
+  * [Logic Component](#logic-component)
+  * [Model Component](#model-component)
+  * [Storage Component](#storage-component)
+* [Implementation](#implementation)
+  * [Edit Student Feature](#edit-student-feature)
+  * [Schedule Lesson Feature](#schedule-lesson-feature)
+  * [Upcoming Lessons Feature](#upcoming-lessons-feature)
+  * [Grade Feature](#grade-feature)
+  * [Find Feature](#find-feature)
+  * [Archive Student Feature](#archive-student-feature)
+  * [Storage Feature](#storage-feature)
+  * [Delete Feature](#delete-feature)
+  * [Fee Management Feature](#fee-management-feature)
+* [Appendix](#appendix)
+  * [Product scope](#product-scope)
+  * [User Stories](#user-stories)
+  * [Non-Functional Requirements](#non-functional-requirements)
+  * [Glossary](#glossary)
+  * [Instructions for manual testing](#instructions-for-manual-testing)
+
+---
+
 
 ## Design
 
@@ -14,8 +43,11 @@ Given below is a quick overview of the main components and how they interact wit
 - Model: Holds the data of the App in memory. This includes `Student`, `StudentList`, `Lesson`, `FeeRecord`, and related domain classes.
 - Storage: Reads data from, and writes data to, the hard disk. Implemented by the `Storage` class, which serializes and deserializes StudentList.
 - Commons: Represents a collection of utility classes (e.g., exceptions, logging, validation) used by multiple other components.
-  
-- ![Sequence diagram — delete command](images/ArchitectureSequenceDiagram.png)
+
+**How the architecture components interact with each other**
+
+The Sequence Diagram below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+![Sequence diagram — delete command](images/ArchitectureSequenceDiagram.png)
 ---
 
 ### UI Component
@@ -51,7 +83,7 @@ Command execution is specified by `command.Command` `execute(StudentList, Ui) an
 - Persist: the caller (main loop) checks `isExit()` and, if not exiting, calls `Storage.save(students)`.
 
 ![Sequence diagram — delete command](images/LogicSequenceDiagram.png)
-*Sequence diagram for the sample execution of `delete` command
+Sequence diagram for the sample execution of `delete` command
 
 #### Design notes
 - Parser is syntax/validation only;  `Command` objects encapsulate execution and interact with the Model.
@@ -143,7 +175,7 @@ The following sequence diagram shows how an edit operation executes through the 
 
   - Cons: The editStudent method parameter list can become long if more fields (e.g., phone number, email) are added in the future.
 
-- **Alternative 2**: Use setter methods directly inside EditCommand** (e.g., if (newName != null) student.setName(newName);).
+- **Alternative 2**: Use setter methods directly inside EditCommand (e.g., if (newName != null) student.setName(newName);).
 
   - Pros: Keeps the Student class slightly smaller by removing the dedicated editStudent method.
 
@@ -192,7 +224,7 @@ The following sequence diagram shows how a schedule operation executes through t
 
 ![Schedule Sequence Diagram](images/ScheduleSequenceDiagram.png)
 
-### Design Considerations
+#### Design Considerations
 
 **Aspect: Handling lesson time conflicts (Double-booking).**
 
@@ -253,7 +285,7 @@ The following sequence diagram shows how the upcoming operation executes through
 
 ![Upcoming Sequence Diagram](images/UpcomingSequenceDiagram.png)
 
-### Design Considerations
+#### Design Considerations
 
 **Aspect: Sorting recurring weekly lessons dynamically based on the current time.**
 
@@ -640,7 +672,7 @@ The following sequence diagram shows how an `unpaid` command executes through th
 
 ---
 
-## Appendix: 
+## Appendix
 
 
 ## Product scope
@@ -714,3 +746,49 @@ Given below are instructions to test the app manually.
 2. Shutdown
 - Type `bye` and press Enter to exit the application.
 - _Expected outcome:_ The application displays a goodbye message and terminates cleanly. All data used during the session is saved to the data storage file.
+
+### Adding and Managing Students
+
+1. Adding a student:
+
+- Test case: `add n/John Doe l/Secondary 3 sub/Math`
+
+  Expected outcome: A new student named John Doe is added. The UI displays a success message showing the student's details and the updated total student count.
+
+- Test case: `add n/Jane l/Primary 4 (Missing subject prefix)`
+
+  Expected outcome: The system throws an error stating that the format is invalid and displays the correct command format.
+
+2. Editing a student:
+
+- Prerequisite: Ensure there is a student at index 1.
+
+- Test case: `edit 1 sub/Science`
+
+  Expected outcome: The student at index 1 has their subject updated to "Science".
+
+### Scheduling and Upcoming Lessons
+
+- Prerequisite: Ensure a student named "John Doe" exists.
+
+- Test case: `schedule John Doe day/Monday start/14:00 end/16:00`
+
+  Expected outcome: A 2-hour lesson is added to John Doe's profile. A success message is displayed.
+
+- Test case: upcoming
+
+  Expected outcome: The UI displays a sorted list of all scheduled lessons for the next 7 days.
+
+### Data Storage
+
+- Launch the app and add a few students and lessons.
+
+- Type `bye` to close the app.
+
+- Navigate to the data/tutorswift.txt file and open it in a text editor to verify the data is saved in the delimited format.
+
+- Modify one of the student's names directly in the text file and save it.
+
+- Relaunch the app and type `list`.
+
+  Expected outcome: The app loads successfully and displays the modified data, proving local file storage works correctly.

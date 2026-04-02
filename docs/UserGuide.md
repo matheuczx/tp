@@ -1,10 +1,37 @@
 # User Guide
 
-- Introduction
-- Quick Start
-- Features
-- FAQ
-- Command Summary
+## Table of Contents
+
+* [Introduction](#introduction)
+* [Quick Start](#quick-start)
+* [Features](#features)
+    * [Notes about command format](#notes-about-command-format)
+    * [Adding a student: `add`](#adding-a-student-add)
+    * [Editing a student: `edit`](#editing-a-student-edit)
+    * [Archiving a student: `archive`](#archiving-a-student-archive)
+    * [Unarchiving a student: `unarchive`](#unarchiving-a-student-unarchive)
+    * [Listing all active students: `list`](#listing-all-active-students-list)
+    * [Listing archived students: `list-archive`](#listing-archived-students-list-archive)
+    * [Finding students: `find`](#finding-students-find)
+    * [Deleting a student: `delete`](#deleting-a-student-delete)
+    * [Deleting an archived student: `delete-archive`](#deleting-an-archived-student-delete-archive)
+    * [Adding a grade: `grade`](#adding-a-grade-grade)
+    * [Removing a grade: `remove-grade`](#removing-a-grade-remove-grade)
+    * [Adding a remark: `remark`](#adding-a-remark-remark)
+    * [Removing a remark: `remove-remark`](#removing-a-remark-remove-remark)
+    * [Scheduling a lesson: `schedule`](#scheduling-a-lesson-schedule)
+    * [Viewing upcoming lessons: `upcoming`](#viewing-upcoming-lessons-upcoming)
+    * [Setting a lesson fee: `fee`](#setting-a-lesson-fee-fee)
+    * [Marking payment as paid: `paid`](#marking-payment-as-paid-paid)
+    * [Marking payment as unpaid: `unpaid`](#marking-payment-as-unpaid-unpaid)
+    * [Exiting the application: `bye`](#exiting-the-application-bye)
+* [Data Archiving and Persistence](#data-archiving-and-persistence)
+    * [Automatic Storage](#automatic-storage)
+    * [Archiving Logic](#archiving-logic)
+* [FAQ](#faq)
+* [Command Summary](#command-summary)
+
+---
 
 ## Introduction
 
@@ -16,7 +43,7 @@ If you can type fast, TutorSwift helps you manage your students faster than trad
 ## Quick Start
 
 1. Ensure you have Java 17 or above installed.
-2. Down the latest version of `TutorSwift` from [here](http://link.to/duke).
+2. Download the latest version of `TutorSwift` from [here](https://github.com/AY2526S2-CS2113-W11-1/tp/releases).
 3. Copy the `.jar` file into an empty folder where you want to use as the home folder and store your TutorSwift data.
 4. Open a command terminal, `cd` into the folder containing the TutorSwift jar file.
 5. Run the command:
@@ -38,7 +65,7 @@ Refer to the Features below for details of each command.
 
 ---
 
-## Features 
+## Features
 
 ### Notes about command format
 
@@ -166,8 +193,8 @@ Format: `find [n/NAME] [sub/SUBJECT] [l/LEVEL]`
 Examples of usage:
 
 - `find n/John` Finds students whose names contain "John".
-- `find s/Math` Finds students taking Math.
-- `find n/John s/Math` Finds students whose name contains "John" and subject contains "Math".
+- `find sub/Math` Finds students taking Math.
+- `find n/John sub/Math` Finds students whose name contains "John" and subject contains "Math".
 
 Expected behaviour:
 - Displays a list of students matching all provided fields
@@ -416,7 +443,6 @@ The system maintains two distinct lists:
 ## FAQ
 
 **Q**: Why does an unpaid month not appear in the student list after running `list`?
-
 **A**: This is expected behaviour. Only months that are marked as paid are displayed in the student list. 
 Unpaid months are intentionally not shown to keep the display clean and uncluttered.
 
@@ -431,27 +457,26 @@ Unpaid months are intentionally not shown to keep the display clean and unclutte
 
 ## Command Summary
 
-{Give a 'cheat sheet' of commands here}
 
 | Action         | Format                                                        | Examples                                            |
 |----------------|---------------------------------------------------------------|-----------------------------------------------------|
-| Add Student    | `add n/NAME l/LEVEL sub/SUBJECT` | `add n/John Doe l/Secondary 2 sub/Math` |
-| List Active    | `list` | `list` |
-| Edit Student   | `edit INDEX [n/NAME] [l/LEVEL] [sub/SUBJECT]` | `edit 1 n/Jane Doe l/Secondary 2 sub/Science` |
-| Delete Active  | `delete INDEX` | `delete 1` |
-| Find           | `find [n/NAME] [sub/SUBJECT] [l/LEVEL]` | `find n/John sub/Math` |
-| Archive        | `archive INDEX` | `archive 1` |
-| List Archive   | `list-archive` | `list-archive` |
-| Unarchive      | `unarchive INDEX` | `unarchive 1` |
-| Delete Archive | `delete-archive INDEX` | `delete-archive 1` |
+| Add Student    | `add n/NAME l/LEVEL sub/SUBJECT` | `add n/John Doe l/Secondary 2 sub/Math`             |
+| List Active    | `list` | `list`                                              |
+| Edit Student   | `edit INDEX [n/NAME] [l/LEVEL] [sub/SUBJECT]` | `edit 1 n/Jane Doe l/Secondary 2 sub/Science`       |
+| Delete Active  | `delete INDEX` | `delete 1`                                          |
+| Find           | `find [n/NAME] [sub/SUBJECT] [l/LEVEL]` | `find n/John sub/Math`                              |
+| Archive        | `archive INDEX` | `archive 1`                                         |
+| List Archive   | `list-archive` | `list-archive`                                      |
+| Unarchive      | `unarchive INDEX` | `unarchive 1`                                       |
+| Delete Archive | `delete-archive INDEX` | `delete-archive 1`                                  |
 | Add Grade      | `grade INDEX m/ASSESSMENT g/SCORE`                            | `grade 1 m/Midterm g/85`                            |
 | Add Remark     | `remark INDEX r/REMARK`                                       | `remark 1 r/Very hardworking student`               |
-| Remove Grade   | `remove-grade INDEX m/ASSESSMENT`                            | `remove-grade 1 m/Midterm`                            |
-| Remove Remark  | `remove-remark INDEX`                                       | `remove-remark 1`               |
+| Remove Grade   | `remove-grade INDEX m/ASSESSMENT`                            | `remove-grade 1 m/Midterm`                          |
+| Remove Remark  | `remove-remark INDEX`                                       | `remove-remark 1`                                   |
 | Schedule       | `schedule n/NAME day/DAY_OF_WEEK start/START_TIME end/END_TIME` | `schedule n/Alice day/Monday start/10:00 end/12:00` |
-| Upcoming       | `upcoming`                                                    | -                                                   |
+| Upcoming       | `upcoming`                                                    | `upcoming`                                           |
 | Set Fee        | `fee INDEX f/AMOUNT`                                          | `fee 1 f/50`                                        |
 | Mark as Paid   | `paid INDEX ym/YYYY-MM`                                       | `paid 1 ym/2026-04`                                 |
 | Mark as Unpaid | `unpaid INDEX ym/YYYY-MM`                                     | `unpaid 1 ym/2026-04`                               |
-| Exit           | `bye`                                                         | -                                                   |
+| Exit           | `bye`                                                         | `bye`                                               |
 
