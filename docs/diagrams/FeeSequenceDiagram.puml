@@ -1,0 +1,41 @@
+@startuml
+hide footbox
+skinparam ArrowFontStyle normal
+
+participant ":FeeCommand" as FC
+participant "students:StudentList" as SL
+participant "student:Student" as S
+participant "feeRecord:FeeRecord" as FR
+participant "ui:Ui" as Ui
+
+[-> FC : execute(students, ui)
+activate FC
+
+opt index valid
+
+    FC -> SL : getActiveStudent(index - 1)
+    activate SL
+    SL --> FC : student
+    deactivate SL
+
+    FC -> S : setFeePerLesson(feePerLesson)
+    activate S
+    S -> FR : setFeePerLesson(feePerLesson)
+    activate FR
+    FR --> S
+    deactivate FR
+    S --> FC
+    deactivate S
+
+    FC -> Ui : showFeeSuccess(student, feePerLesson)
+    activate Ui
+    Ui --> FC
+    deactivate Ui
+
+end
+
+[<-- FC
+deactivate FC
+destroy FC
+
+@enduml

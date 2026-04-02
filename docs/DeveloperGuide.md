@@ -463,6 +463,92 @@ objects:
 
 ---
 
+### Fee Management Feature
+
+The fee management feature allows the user to track lesson fees and monthly payment
+status for each student. It comprises three commands `fee`, `paid` and `unpaid`. They
+are handled by `FeeCommand`, `PaidCommand` and `UnpaidCommand` respectively, with fee
+data encapsulated in the `FeeRecord` class inside each `Student`.
+
+The primary logic is implemented in `FeeCommand#execute()`, `PaidCommand#execute()`
+and `UnpaidCommand#execute()`, each of which delegates state changes to `FeeRecord` 
+through `Student`.
+
+Each `Student` owns a `FeeRecord` instance that stores
+two things: a per-lesson fee (`int feePerLesson`) and a list of months the student
+has paid (`ArrayList<YearMonth> paidMonths`). The `fee` command sets the per-lesson
+rate, `paid` command adds a given `YearMonth` from the paid list while `unpaid` command
+removes it. All three commands share a common execution flow: validate the index, 
+retrieve the student, update the `FeeRecord` and call `Ui` to display the result.
+
+#### Example Usage Scenario
+
+Step 1. The user launches the application. `StudentList` contains "Alice" at index 1,
+with `feePerLesson = 0` and no paid months recorded.
+
+Step 2. The user sets Alice's lesson fee by executing `fee 1 f/80`.
+
+Step 3. The parser extracts index `1` and fee `80` from the argument string and
+constructs a `FeeCommand(1, 80)`.
+
+Step 4. `FeeCommand#execute()` validates that index 1 is within bounds, retrieves
+Alice via `StudentList#getActiveStudent(0)`, calls `Student#setFeePerLesson(80)`
+(which delegates to `FeeRecord#setFeePerLesson(80)`) and calls
+`Ui#showFeeSuccess(alice, 80)`.
+
+Step 5. The user marks Alice as paid for March 2026 by executing `paid 1 ym/2026-03`.
+
+Step 6. The parser constructs a `PaidCommand(1, YearMonth.of(2026, 3))`.
+
+Step 7. `PaidCommand#execute()` retrieves Alice, calls `Student#markPaid(2026-03)`
+(which calls `FeeRecord#markPaid(2026-03)`), adding the month to `paidMonths` if not
+already present. `Ui#showPaidSuccess(alice, 2026-03)` is then called.
+
+Step 8. The user realises the payment amount received was incorrect and executes
+`unpaid 1 ym/2026-03`.
+
+Step 9. `UnpaidCommand#execute()` retrieves Alice and calls
+`Student#markUnpaid(2026-03)`, which calls `FeeRecord#markUnpaid(2026-03)` to remove
+March 2026 from `paidMonths`. Then, `Ui#showUnpaidSuccess(alice, 2026-03)` is called.
+
+Step 10. After each command, control returns to `TutorSwift`, which calls
+`Storage#save(students)` to persist the updated data to disk.
+
+The following sequence diagram shows how a `fee` command executes through the objects:
+
+![Fee Sequence Diagram](images/FeeSequenceDiagram.png)
+
+The following sequence diagram shows how a `paid` command executes through the objects:
+
+![Paid Sequence Diagram](images/PaidSequenceDiagram.png)
+
+The following sequence diagram shows how an `unpaid` command executes through the objects:
+
+![Unpaid Sequence Diagram](images/UnpaidSequenceDiagram.png)
+
+#### Design Considerations
+
+**Aspect: Where to store and manage fee and payment data.**
+
+- **Alternative 1 (Chosen)**: Encapsulate fee and payment data in a separate
+  `FeeRecord` class owned by each `Student`.
+
+  - Pros: High cohesion as all fee-related logic (marking paid/unpaid)
+    lives in one place, making the code cleaner. Extending the record is also 
+    easier as it only requires changes to `FeeRecord`.
+
+  - Cons: Adds an extra class and layer, so command classes must call through
+    `Student` to reach `FeeRecord`.
+
+- **Alternative 2**: Store fee data directly in the `Student` class.
+
+  - Pros: Simpler structure with fewer classes.
+
+  - Cons: Clutters the `Student` class and mixes payment concerns with student identity
+    and academic data, reducing cohesion and making maintenance harder.
+
+---
+
 ## Appendix: 
 
 
@@ -492,7 +578,8 @@ TutorSwift is a high-speed administrative tool that allows tutors to track stude
 | v2.0    | tutor                           | view a sorted list of all my scheduled lessons relative to the current day and time                         | instantly see who I am teaching next and prepare my materials without having to manually search through every student's individual profile. |
 | v2.0    | tutor                           | assign grades to my students                                                                                | track their assessment performance and keep their academic records up to date.                                                              |
 | v2.0    | tutor                           | add remarks to my students                                                                                  | provide personalized notes or feedback and keep track of important student observations.                                                    |
-| v2.0    | tutor                           | record the student's tuition fee for each lesson and mark whether it has been paid or unpaid                | keep track of payment status and outstanding payments efficiently.                                                                          |
+| v2.0    | tutor                           | record the student's tuition fee for each lesson                                                            | keep track of how much each student owes per lesson.                                                                                        |
+| v2.0    | tutor                           | mark whether the payment has been paid or unpaid for a particular month                                     | keep track of payment status and outstanding payments efficiently.                                                                          |
 | v2.0    | tutor                           | find a student, subject or level by keyword quickly                                                         | search for details                                                                                                                          |
 | v2.0    | tutor managing multiple cohorts | move graduated or inactive students to a separate archive list                                              | still access their performance history if needed and my primary workspace remains uncluttered                                               |
 | v2.0    | tutor                           | save my data automatically to the local disk                                                                | do not have to manually save my progress and can resume exactly where I left off when I restart the app.                                    |
@@ -534,5 +621,5 @@ Given below are instructions to test the app manually.
 - _Expected outcome:_ The application launches, displays the TutorSwift logo, the welcome message, and creates a `data` folder (if it does not already exist).
 
 2. Shutdown
-- Type `exit` and press Enter
+- Type `bye` and press Enter to exit the application.
 - _Expected outcome:_ The application displays a goodbye message and terminates cleanly. All data used during the session is saved to the data storage file.

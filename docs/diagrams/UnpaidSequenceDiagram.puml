@@ -1,0 +1,42 @@
+@startuml
+hide footbox
+skinparam ArrowFontStyle normal
+
+participant ":UnpaidCommand" as UC
+participant "students:StudentList" as SL
+participant "student:Student" as S
+participant "feeRecord:FeeRecord" as FR
+participant "ui:Ui" as Ui
+
+[-> UC : execute(students, ui)
+activate UC
+
+opt index valid
+
+    UC -> SL : getActiveStudent(index - 1)
+    activate SL
+    SL --> UC : student
+    deactivate SL
+
+    UC -> S : markUnpaid(targetMonth)
+    activate S
+    S -> FR : markUnpaid(targetMonth)
+    activate FR
+    FR -> FR : paidMonths.remove(targetMonth)
+    FR --> S
+    deactivate FR
+    S --> UC
+    deactivate S
+
+    UC -> Ui : showUnpaidSuccess(student, targetMonth)
+    activate Ui
+    Ui --> UC
+    deactivate Ui
+
+end
+
+[<-- UC
+deactivate UC
+destroy UC
+
+@enduml
