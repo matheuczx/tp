@@ -48,6 +48,10 @@ User Guide:
 - Standardised command documentation format for clarity and consistency
 
 Developer Guide:
+- Contributed to entire design details of Developer Guide
+- Added sequence diagrams for:
+  - Execution flow overall architecture
+  - Execution flow of logic 
 - Added implementation details for the `FindCommand` feature
 - Added sequence diagrams for:
     - Parser handling of `find` command
