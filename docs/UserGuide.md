@@ -79,6 +79,64 @@ Examples of usage:
 - `edit 1 n/Jane Doe l/Secondary 2 sub/Science` Edits the name, academic level and subject of the 1st student to be `Jane Doe`, `Secondary 2` and `Science` respectively.
 - `edit 2 n/Ben Tan` Edits the name of the 2nd student to be `Ben Tan` and leaves the existing `ACADEMIC_LEVEL` and `SUBJECT` untouched.
 
+
+### Listing all active students: `list`
+
+Displays all active students in the system.
+
+Format: `list`
+
+- Shows all students currently in the active student list.
+- Each student entry includes their name, academic level, and subject.
+
+Example of usage:
+`list`
+
+Expected behaviour:
+- Displays a numbered list of all active students
+- If there are no students, the following message is shown: `Your active student list is currently empty.`
+
+### Listing all archived students: `list-archive`
+
+Displays all archived students in the system.
+
+Format: `list-archive`
+
+- Shows all students currently in the active student list.
+- Each student entry includes their name, academic level, and subject.
+
+Example of usage:
+`list - archive`
+
+Expected behaviour:
+- Displays a numbered list of all archived students
+- Each student will be listed as [ARCHIVED]
+
+### Finding students: `find`
+
+Finds students based on name, subject, and/or academic level.
+
+Format: `find [n/NAME] [sub/SUBJECT] [l/LEVEL]`
+
+- At least one prefix (`n/`, `sub/`, or `l/`) must be provided.
+- `n/` filters by student name.
+- `sub/` filters by subject.
+- `l/` filters by academic level.
+- Matching is case-insensitive and supports partial matches.
+- Searches across both active and archived students.
+
+Examples of usage:
+
+- `find n/John` Finds students whose names contain "John".
+- `find s/Math` Finds students taking Math.
+- `find n/John s/Math` Finds students whose name contains "John" and subject contains "Math".
+
+Expected behaviour:
+- Displays a list of students matching all provided fields
+- If no students match, an appropriate message is shown: `No matching students found.`
+- If no valid prefix or empty values are provided, an error message is displayed:
+`Find command requires at least one prefix (n/, sub/, l/)`
+
 ### Deleting a student: `delete`
 
 Permanently removes a student from the active list.

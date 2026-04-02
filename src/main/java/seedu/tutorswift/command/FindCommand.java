@@ -60,17 +60,17 @@ public class FindCommand extends Command {
      */
     private void searchList(ArrayList<Student> source, ArrayList<Student> results) {
         for (Student s : source) {
-            boolean matches = true;
+            boolean isMatch = true;
             if (name != null) {
-                matches &= s.getName().toLowerCase().contains(name.toLowerCase());
+                isMatch &= s.getName().toLowerCase().contains(name.toLowerCase());
             }
             if (subject != null) {
-                matches &= s.getSubject().toLowerCase().contains(subject.toLowerCase());
+                isMatch &= s.getSubject().toLowerCase().contains(subject.toLowerCase());
             }
             if (level != null) {
-                matches &= s.getAcademicLevel().toLowerCase().contains(level.toLowerCase());
+                isMatch &= s.getAcademicLevel().toLowerCase().contains(level.toLowerCase());
             }
-            if (matches) {
+            if (isMatch) {
                 results.add(s);
             }
         }
