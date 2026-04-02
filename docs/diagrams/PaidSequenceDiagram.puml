@@ -1,0 +1,46 @@
+@startuml
+hide footbox
+skinparam ArrowFontStyle normal
+
+participant ":PaidCommand" as PC
+participant "students:StudentList" as SL
+participant "student:Student" as S
+participant "feeRecord:FeeRecord" as FR
+participant "ui:Ui" as Ui
+
+[-> PC : execute(students, ui)
+activate PC
+
+opt index valid
+
+    PC -> SL : getActiveStudent(index - 1)
+    activate SL
+    SL --> PC : student
+    deactivate SL
+
+    PC -> S : markPaid(targetMonth)
+    activate S
+    S -> FR : markPaid(targetMonth)
+    activate FR
+
+    opt month not in paidMonths
+        FR -> FR : paidMonths.add(targetMonth)
+    end
+
+    FR --> S
+    deactivate FR
+    S --> PC
+    deactivate S
+
+    PC -> Ui : showPaidSuccess(student, targetMonth)
+    activate Ui
+    Ui --> PC
+    deactivate Ui
+
+end
+
+[<-- PC
+deactivate PC
+destroy PC
+
+@enduml
