@@ -270,8 +270,7 @@ public class Ui {
         StringBuilder output = new StringBuilder("Here are your upcoming lessons for the next 7 days:\n");
 
         for (RelativeLesson entry : entries) {
-            String dayMarker = entry.getDaysFromToday() == 0 ? " (Today)" :
-                    entry.getDaysFromToday() == 1 ? " (Tomorrow)" : "";
+            String dayMarker = entry.getDaysFromToday() == 1 ? " (Tomorrow)" : "";
 
             output.append("- ").append(entry.getLesson().getDay()).append(dayMarker)
                     .append(" ").append(entry.getLesson().getStartTime())

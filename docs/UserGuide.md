@@ -442,18 +442,18 @@ The system maintains two distinct lists:
 
 ## FAQ
 
-**Q**: Why does an unpaid month not appear in the student list after running `list`?
+**Q**: Why does an unpaid month not appear in the student list after running `list`?  
 **A**: This is expected behaviour. Only months that are marked as paid are displayed in the student list. 
 Unpaid months are intentionally not shown to keep the display clean and uncluttered.
 
 **Q**: Where is my data saved?  
-**A**: Inside the `data` folder in the same directory as your `TutorSwift.jar` file.
+**A**: Inside the `data` folder in the same directory as your `tutorswift.jar` file.
 
 **Q**: Can I edit the save file manually?  
 **A**: While possible (it's a text file), it is **not recommended** as incorrect formatting may lead to data loss.
 
 **Q**: How do I move TutorSwift to another computer?  
-**A**: Copy the `TutorSwift.jar` file and the entire `data` folder to the new machine.
+**A**: Copy the `tutorswift.jar` file and the entire `data` folder to the new machine.
 
 ## Command Summary
 

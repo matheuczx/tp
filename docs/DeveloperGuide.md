@@ -767,6 +767,46 @@ Given below are instructions to test the app manually.
 
   Expected outcome: The student at index 1 has their subject updated to "Science".
 
+### Deleting an active student
+
+- Prerequisites: At least one student in the active list. Use `list` to verify index of current active students.
+- Test case: `delete 1`  
+  Expected outcome: First active student is removed. Success message shows deleted student's details and updated total student count.
+- Test case: `delete 0`  
+  Expected outcome: No student is removed. Error details shown in the status message.
+- Other incorrect delete commands to try: `delete`, `delete -5`, `delete abc`  
+  Expected outcome: Similar to previous.
+
+### Setting a student's per-lesson fee
+
+- Prerequisites: At least one active student in the list. Use `list` to verify.
+- Test case: `fee 1 f/80`  
+  Expected outcome: Fee for the first student is set to $80/lesson. Updated student details shown in the result message.
+- Test case: `fee 1 f/0`  
+  Expected outcome: Fee is not updated. Error message is shown.
+- Other incorrect commands to try: `fee`, `fee 1`, `fee 0 f/50`, `fee 1 f/-50`  
+  Expected outcome: Similar to previous.
+
+### Marking a student's payment as paid
+
+- Prerequisites: At least one active student in the list. Use `list` to verify.
+- Test case: `paid 1 ym/2026-03`  
+  Expected outcome: First student marked as PAID for March 2026. Updated details shown in result message.
+- Test case: `paid 1 ym/2026-13`  
+  Expected outcome: Error message is shown. Month value 13 is invalid.
+- Other incorrect commands to try: `paid`, `paid 1`, `paid 0 ym/2026-03`  
+  Expected outcome: Error message is shown.
+
+### Marking a student's payment as unpaid
+
+- Prerequisites: At least one active student previously marked as paid for a month. Use `paid 1 ym/2026-03` to set up.
+- Test case: `unpaid 1 ym/2026-03`  
+  Expected outcome: March 2026 removed from the student's paid months. Updated details shown in result message.
+- Test case: `unpaid 1`  
+  Expected outcome: Error message is shown. Missing `ym/` prefix.
+- Other incorrect commands to try: `unpaid`, `unpaid 1 ym/2026-13`, `unpaid 0 ym/2026-03`  
+  Expected outcome: Error message is shown.
+
 ### Scheduling and Upcoming Lessons
 
 - Prerequisite: Ensure a student named "John Doe" exists.
