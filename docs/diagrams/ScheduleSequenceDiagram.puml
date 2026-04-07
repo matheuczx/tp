@@ -33,24 +33,31 @@ deactivate Lesson
 ScheduleCommand -> Student : addLesson(newLesson)
 activate Student
 
-opt has existing lessons
-    loop all existing lessons
-        Student -> ExistingLesson : isOverlapping(newLesson)
-        activate ExistingLesson
-        ExistingLesson --> Student : false
-        deactivate ExistingLesson
-    end
+loop all existing lessons
+    Student -> ExistingLesson : isOverlapping(newLesson)
+    activate ExistingLesson
+    ExistingLesson --> Student : isOverlap
+    deactivate ExistingLesson
 end
-deactivate Student
 
-ScheduleCommand -> Student : getName()
-activate Student
-Student --> ScheduleCommand : "Alice"
-deactivate Student
+alt isOverlap == true
+    Student --> ScheduleCommand : TutorSwiftException
+    deactivate Student
 
-ScheduleCommand -> Ui : showLessonScheduled("Alice", newLesson)
-activate Ui
-deactivate Ui
+    [<-- ScheduleCommand : TutorSwiftException
+
+else isOverlap == false
+    deactivate Student
+
+    ScheduleCommand -> Student : getName()
+    activate Student
+    Student --> ScheduleCommand : "Alice"
+    deactivate Student
+
+    ScheduleCommand -> Ui : showLessonScheduled("Alice", newLesson)
+    activate Ui
+    deactivate Ui
+end
 
 [<-- ScheduleCommand
 deactivate ScheduleCommand
