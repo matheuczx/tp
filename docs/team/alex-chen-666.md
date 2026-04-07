@@ -50,6 +50,7 @@ Given below are my contributions to the project.
 ### 4. Contributions to the Developer Guide (DG)
 *   Documented implementation details for **Archive** and **Storage** features.
 *   Created **Sequence Diagrams** for the archiving operation and automatic saving logic.
+*   Created **StorageClassDiagram** for Storage component
 *   Authored design considerations regarding **Dual-List Management**.
 
 ### 5. Contributions to Team-Based Tasks
