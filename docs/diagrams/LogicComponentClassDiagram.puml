@@ -1,0 +1,42 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+package "Logic" <<Rectangle>> {
+    class Parser {
+        + {static} parseUserInput(input: String): Command
+        - {static} parseAdd(args: String): Command
+        - {static} parseEdit(args: String): Command
+        - {static} parseDelete(args: String): Command
+        - {static} getValueByPrefix(args: String, prefix: String): String
+    }
+
+    abstract class Command {
+        + {abstract} execute(students: StudentList, ui: Ui)
+        + isExit(): boolean
+    }
+
+    class AddCommand {
+        - student: Student
+        + execute(students: StudentList, ui: Ui)
+    }
+
+    class DeleteCommand {
+        - index: int
+        + execute(students: StudentList, ui: Ui)
+    }
+
+    class ExitCommand {
+        + execute(students: StudentList, ui: Ui)
+        + isExit(): boolean
+    }
+}
+
+' Inheritance Relationships
+AddCommand -up-|> Command
+DeleteCommand -up-|> Command
+ExitCommand -up-|> Command
+
+' Parser Dependency
+Parser .down.> Command : creates >
+@enduml

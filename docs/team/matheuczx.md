@@ -32,7 +32,7 @@ Given below are my contributions to the project.
 
 Project management:
 - Contributed to feature development and integration within the team repository
-
+- Released V2.0 on Github along with UG and DG pdfs
 ---
 
 Enhancements to existing features:
@@ -45,17 +45,20 @@ Documentation:
 
 User Guide:
 - Added documentation for `find` and `list` commands (format, examples, expected behaviour, error cases)
-- Standardised command documentation format for clarity and consistency
 
 Developer Guide:
-- Contributed to entire design details of Developer Guide
+- Added design details of Architecture, Model, Ui, Logic, Storage components.
 - Added sequence diagrams for:
   - Execution flow overall architecture
   - Execution flow of logic 
-- Added implementation details for the `FindCommand` feature
+- Added Class diagrams for:
+  - Model Component
+  - Ui Component
+  - Logic Component
+- Added implementation details for the `FindCommand` and `ListCommand` feature
 - Added sequence diagrams for:
-    - Parser handling of `find` command
     - Execution flow of `FindCommand`
+    - Execution flow of `ListCommand`
 
 Contributions beyond project team:
 - Guided team members on usage of PlantUML for sequence diagrams

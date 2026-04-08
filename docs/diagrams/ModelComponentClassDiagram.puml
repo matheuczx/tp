@@ -1,0 +1,57 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+package "Model" <<Rectangle>> {
+    class StudentList {
+        - activeStudents: ArrayList<Student>
+        - archivedStudents: ArrayList<Student>
+        + addStudent(student: Student)
+        + archiveStudent(index: int): Student
+        + unarchiveStudent(index: int): Student
+        + getActiveSize(): int
+        + getArchivedSize(): int
+    }
+
+    class Student {
+        - name: String
+        - subject: String
+        - academicLevel: String
+        - isArchived: boolean
+        - remark: String
+        + addLesson(lesson: Lesson)
+        + addGrade(assessment: String, score: int)
+        + editStudent(name: String, level: String, sub: String)
+        + toSaveFormat(): String
+    }
+
+    class Lesson {
+        - day: DayOfWeek
+        - startTime: LocalTime
+        - endTime: LocalTime
+        + isOverlapping(other: Lesson): boolean
+        + toString(): String
+    }
+
+    class Grade {
+        - assessment: String
+        - score: int
+        + getAssessment(): String
+        + getScore(): int
+    }
+
+    class FeeRecord {
+        - feePerLesson: int
+        - paidMonths: ArrayList<YearMonth>
+        + setFeePerLesson(fee: int)
+        + markPaid(month: YearMonth)
+        + toSaveFormat(): String
+    }
+}
+
+' Relationships with Multiplicity
+StudentList "1" o-- "*" Student : contains >
+Student "1" *-- "*" Lesson : has >
+Student "1" *-- "*" Grade : tracks >
+Student "1" *-- "1" FeeRecord : manages >
+@enduml

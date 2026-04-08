@@ -1,0 +1,63 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+package "UI" <<Rectangle>> {
+    class Ui {
+        - scanner: Scanner
+        + readUserInput(): String
+        + showStudentList(students: StudentList)
+        + showArchivedList(students: StudentList)
+        + showAddSuccess(student: Student, total: int)
+        + showEditSuccess(student: Student)
+        + showArchiveSuccess(student: Student)
+        + showFeeSuccess(student: Student, fee: int)
+        + showPaidSuccess(student: Student, month: YearMonth)
+        - printStudentDetails(student: Student)
+    }
+}
+
+package "Model" <<Rectangle>> {
+    class StudentList {
+        - activeStudents: ArrayList<Student>
+        - archivedStudents: ArrayList<Student>
+        + getActiveSize(): int
+        + getArchivedSize(): int
+        + getActiveStudent(i: int): Student
+        + getArchivedStudent(i: int): Student
+    }
+
+    class Student {
+        - name: String
+        - subject: String
+        - academicLevel: String
+        - isArchived: boolean
+        - remark: String
+        + getName(): String
+        + getSubject(): String
+        + toString(): String
+    }
+
+    class Lesson {
+        + toString(): String
+    }
+
+    class Grade {
+        + toString(): String
+    }
+
+    class FeeRecord {
+        + toString(): String
+    }
+}
+
+' UI Dependencies
+Ui .down.> StudentList : queries >
+Ui .right.> Student : displays >
+
+' Model Relationships
+StudentList "1" o-down-> "*" Student : contains >
+Student "1" *-- "*" Lesson : has >
+Student "1" *-- "*" Grade : tracks >
+Student "1" *-- "1" FeeRecord : manages >
+@enduml
