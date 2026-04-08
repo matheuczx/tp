@@ -61,6 +61,7 @@ The API of this component is specified in Ui.java.
 - Console-based single window: Ui is a single presentation class that centralises all input/output responsibilities `welcome, prompts, formatted results, error messages, dividers`.
 - Presentation helpers: small private helpers `e.g., printStudentDetails` keep formatting consistent across different showXxx methods.
 - Constants: visual strings `logo, dividers, messages` are kept as constants inside Ui so layout/text changes are localised.
+- ![Storage Class Diagram](images/UiComponentClassDiagram.png)
 ####  What the UI component does
 - Reads raw input from System.in via readUserInput().
 - Displays results for domain operations `add, edit, delete, archive, schedule, fee updates, find, upcoming lessons`.
@@ -78,7 +79,7 @@ Command execution is specified by `command.Command` `execute(StudentList, Ui) an
 - Parser: single entry point `parseUserInput(String)` that tokenises the command word and delegates to `parseXxx` helpers (for example `parseAdd`, `parseEdit`, `parseDelete`).
 - Command hierarchy: abstract Command defines `execute(StudentList, Ui)` and `isExit()`. Concrete subclasses (for example `AddCommand`, `DeleteCommand`) implement behaviour.
 - Parsing helpers: `getValueByPrefix(...)` and `parseIndex(...)` encapsulate common parsing and validation logic.
-
+  ![Storage Class Diagram](images/LogicComponentClassDiagram.png)
 ####  What the Logic component does
 - Tokenise raw user input into `commandName` and `arguments`.
 - Dispatch to the appropriate `parseXxx` helper based on `commandName`.
@@ -110,13 +111,14 @@ It defines the core entities (`Student`, `StudentList`, `Lesson`, `FeeRecord`, e
 - `Student`: encapsulates a single student’s details (name, subject, academic level, lessons, fee record, remark, archived flag).
 - `StudentList`: manages collections of active and archived students, exposes APIs like `addStudent()`, `deleteActiveStudent()`.
 - `Lesson`: represents a scheduled lesson with day and time slots.
+- `Grade`: represents an academic achievement, consisting of an assessment name (e.g., "Midterm") and a numerical score
 - `FeeRecord`: tracks monthly payment status for a student.
-
+  ![Storage Class Diagram](images/ModelComponentClassDiagram.png)
 #### Interactions
 - Logic commands call `StudentList` methods to mutate state.
 - Storage serializes and deserializes `StudentList` and `Student` objects to/from disk.
 - UI queries the Model indirectly (through Logic) to display lists or details.
-
+  
 ---
 
 ### Storage Component
@@ -369,103 +371,115 @@ Option 1 was chosen for better modularity and maintainability.
 
 - Grades are stored as a list of `Grade` objects
 - Duplicate assessments are allowed (no validation enforced)
+---
 
 ### Find Feature
 
-#### Overview
-The `find` feature allows users to search for students by:
-- Name (`n/`)
-- Subject (`sub/`)
-- Academic level (`l/`)
-
-The search supports **partial** and **case-insensitive** matching.
-
----
+The find mechanism allows users to search for students across both active and archived lists using specific criteria. It is facilitated primarily by the `FindCommand`, `StudentList`, and `Student` classes.
 
 #### Implementation
 
-#### Parsing Logic
-The `Parser.parseFind()` method:
-- Extracts values using prefixes `n/`, `sub/`, and `l/`
-- Returns a `FindCommand` with the extracted fields
-- Throws `TutorSwiftException` if:
-  - Input is empty
-  - No valid prefixes are provided
+The find feature's core logic resides within the `FindCommand#execute(students, ui)` method and a helper `FindCommand#searchList(List<Student> list)` method. The operation is executed through the following sequence:
 
-Fields not specified are set to `null`.
+1. `FindCommand#execute(students, ui)` is invoked.
+2. The command retrieves both the active and archived student collections from the `StudentList`.
+3. The command iterates through both collections, applying a filter based on the non-null criteria (Name, Subject, and/or Level) provided during parsing.
+4. For each field, the command performs a case-insensitive partial match using `String#contains()`.
+5. The matching results are aggregated and passed to `Ui#showFindResults(results)` for display.
 
----
-![Edit Sequence Diagram](images/ParserFindSequenceDiagram.png)
+Given below is an example usage scenario and how the find mechanism behaves at each step.
 
-#### Command Execution
-When `FindCommand.execute()` is called:
+Step 1. The user wants to find all students taking "Math" and executes `find sub/Math`.
 
-Step 1. Retrieves active and archived students
+Step 2. The `Parser` interprets the input and instantiates a `FindCommand` with `subject` set to "Math" and other fields set to `null`.
 
-Step 2. Searches both lists using `searchList()`
+Step 3. The `FindCommand#execute()` method is called. It fetches all students from the `StudentList`.
 
-Step 3. Filters students based on non-null fields:
-  - Uses `contains()` for partial matching
-  - Converts strings to lowercase for case-insensitive comparison
+Step 4. The command filters the students. If a student's subject is "Mathematics", it results in a match because "Mathematics" contains "math" (case-insensitive).
 
-Step 4. Passes matching results to `Ui.showFindResults()`
+Step 5. The list of matching students is passed to the `Ui`.
 
----
-![Edit Sequence Diagram](images/FindSequenceDiagram.png)
-#### Helper Method
-`searchList()`:
-- Iterates through a list of students
-- Applies filtering conditions
-- Adds matching students to a results list
+Step 6. The `Ui` displays the matching students or an error message if no matches were found.
 
----
+The following sequence diagram shows how a find operation executes through the objects:
+
+![Find Sequence Diagram](images/FindSequenceDiagram.png)
 
 #### Design Considerations
 
-- **Search scope**
-  - Searches both active and archived students
-  - Provides more comprehensive results
+**Aspect: Search Scope (Active vs. Archive).**
 
-- **Matching strategy**
-  - Uses partial (`contains`) and case-insensitive matching
-  - Improves usability
+* **Alternative 1 (Current Choice)**: Search both active and archived lists simultaneously.
+  * **Pros**: User-friendly; users don't need to remember if a student was archived to find them.
+  * **Cons**: Results may become cluttered if the archive is very large.
 
-- **Flexible input**
-  - Allows any combination of fields
-  - Supports varied user queries
-
-- **Validation**
-  - Rejects empty or invalid inputs
-  - Prevents meaningless searches
+* **Alternative 2**: Only search the active list by default, requiring a specific flag (e.g., `find n/Alice /archive`) to search the archive.
+  * **Pros**: More focused results and slightly faster execution for large datasets.
+  * **Cons**: Adds complexity to the command syntax and might lead to "missing" students if the user forgets to check the archive.
 
 ---
 
-#### Error Handling
+#### Key classes
+* **`Student`**: encapsulates a single student’s details (name, subject, academic level, lessons, fee record, **grades**, remark, archived flag).
+* **`StudentList`**: manages collections of active and archived students, exposes APIs like `+ getActiveStudents()`, `+ getArchivedStudents()`.
+* **`Grade`**: represents an academic achievement, consisting of an assessment name (e.g., "Midterm") and a numerical score.
+* **`Lesson`**: represents a scheduled lesson with day and time slots.
+* **`FeeRecord`**: tracks monthly payment status for a student.
 
-- Throws `TutorSwiftException` when:
-  - No prefixes are provided
-  - All fields are empty
-- Displays appropriate message if no results are found
+
+---
+### List Students Feature
+
+The list mechanism allows the user to view all currently active students. It is facilitated primarily by the `ListCommand`, `StudentList`, and `Ui` classes.
+
+The list feature's core logic resides within the `StudentList#getActiveSize()` and the `Ui#showStudentList(ArrayList<Student> students)` methods. The operation is executed through the following sequence:
+
+1. `ListCommand#execute(students, ui)` is invoked.
+2. The command calls `StudentList#getActiveSize()` to determine if there are students to display.
+3. If the size is 0, the command calls `Ui#showError(message)` to inform the user the list is empty.
+4. If students exist, it calls `StudentList#getActiveStudents()` to retrieve the collection.
+5. The command then calls `Ui#showStudentList(...)`, passing the list to be rendered to the user.
+
+Given below is an example usage scenario and how the list mechanism behaves at each step.
+
+Step 1. The user launches the application. The `StudentList` contains two active students: "Alice" and "Bob".
+
+Step 2. The user executes the command `list`.
+
+Step 3. The `Parser` interprets the user input and instantiates a `ListCommand` object.
+
+Step 4. The `ListCommand#execute()` method is called. It verifies that the active list is not empty by checking `StudentList#getActiveSize()`.
+
+Step 5. The command retrieves the `ArrayList` of active students and passes it to `ui.showStudentList(activeStudents)`.
+
+Step 6. The `Ui` iterates through the list, printing a formatted, numbered list of all active students and their profile details.
+
+The following sequence diagram shows how a list operation executes through the objects:
+
+![Archive Sequence Diagram](images/ShowActiveListSequenceDiagram.png)
+#### Design Considerations
+
+**Aspect: How the student list is passed to the UI.**
+
+* **Alternative 1 (Current Choice)**: Pass the entire `ArrayList<Student>` directly to `Ui#showStudentList()`.
+  * **Pros**: High performance; the list is passed by reference, and the `Ui` can handle formatting in a single pass.
+  * **Cons**: The `Ui` becomes dependent on the `Student` object structure to extract names and details.
+
+* **Alternative 2**: The `ListCommand` converts the students into a single large String and passes only that String to the `Ui`.
+  * **Pros**: Better decoupling. The `Ui` remains a "dumb" component that only knows how to print strings, not how a `Student` is structured.
+  * **Cons**: The `ListCommand` logic becomes cluttered with UI-related formatting code (like numbering and spacing), violating the Single Responsibility Principle.
 
 ---
 
-#### Testing
+#### Key classes
+* **`Student`**: encapsulates a single student’s details (name, subject, academic level, lessons, fee record, **grades**, remark, archived flag).
+* **`StudentList`**: manages collections of active and archived students, exposes APIs like `+ addStudent()`, `+ deleteActiveStudent()`.
+* **`Grade`**: represents an academic achievement, consisting of an assessment name (e.g., "Midterm") and a numerical score.
+* **`Lesson`**: represents a scheduled lesson with day and time slots.
+* **`FeeRecord`**: tracks monthly payment status for a student.
 
-Tested using `FindCommandTest` and `ParserTest`:
-- Valid searches (single and multiple fields)
-- Invalid inputs (no prefixes, empty values)
-- No matching results
-
----
-
-#### Possible Improvements
-
-- Fuzzy matching (typo tolerance)
-- Multiple keywords per field
-- Additional filtering options
-
----
-
+#### Notes
+- Implementation for showing Archived student list is similar and hence ommitted.
 ### Archive Student Feature
 
 #### Implementation
