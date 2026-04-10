@@ -69,9 +69,6 @@ ____________________________________________________________
 ____________________________________________________________
 Got it! I've scheduled a lesson for Alice Lim on MONDAY 15:00 to 17:00
 ____________________________________________________________
-Here are your upcoming lessons for the next 7 days:
-- MONDAY 15:00 to 17:00 | Alice Lim (Math)
-____________________________________________________________
 ____________________________________________________________
  Done! I've updated the details for this student:
     Alice Lim | Secondary 4 | Math | Grades: [Midterm: 85] | Lessons: [MONDAY 15:00 to 17:00] | Remark: Needs help with algebra | Fee: $50/lesson | No payments recorded

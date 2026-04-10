@@ -8,7 +8,6 @@ fee 1 f/50
 paid 1 ym/2026-04
 unpaid 1 ym/2026-04
 schedule n/Alice Lim day/MONDAY start/15:00 end/17:00
-upcoming
 grade 1 m/Midterm g/85
 remove-grade 1 m/Midterm
 remove-remark 1
