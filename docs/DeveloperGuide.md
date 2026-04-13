@@ -742,7 +742,7 @@ TutorSwift is a high-speed administrative tool that allows tutors to track stude
 1. Hardware Requirements: The system should work on any mainstream operating system (Windows, macOS, Linux) that has Java 17 or above installed.
 2. Performance: The system should respond to all user commands within two seconds.
 3. Capacity: The system should be capable of holding up to 1,000 student profiles (including their associated grades and lessons, etc) without noticeable sluggishness in performance for typical usage.
-4. User Interface: A user who is an above-average typist should be able to accomplish tasks significantly faster using the Command Line Interface (CLI) compared to a traditional mouse-driven Graphical User Interface (GUI).
+4. User Interface: A user with a typing speed of at least 50 WPM should be able to complete student record updates (e.g., adding a student and scheduling a lesson) within 10 seconds, which is at least 30% faster than performing the equivalent tasks on a standard mouse-driven GUI.
 5. Data Persistence: Data should be saved locally in a human-editable text file without requiring the installation of a dedicated Database Management System (DBMS).
 6. Robustness: The system should not crash under typical usage or when provided with invalid user input, it should gracefully handle errors and display helpful feedback to the user.
 
