@@ -2,6 +2,10 @@ package seedu.tutorswift;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.List;
+import java.time.DayOfWeek;
 
 /**
  * Tracks the per-lesson fee and paid months for a student.
@@ -101,5 +105,47 @@ public class FeeRecord {
         }
 
         return "Fee: " + feeStr + " | " + paidStr.toString();
+    }
+
+    /**
+     * Calculates the total fees for a given month by aggregating the occurrences
+     * of all lessons scheduled within that month.
+     *
+     * @param lessons A {@code List} of {@link seedu.tutorswift.Lesson} objects assigned to the student.
+     * @param month The {@code YearMonth} representing the specific month for which the fees are calculated.
+     * @return The total fee amount as an {@code int}, or 0 if the fee per lesson is not set.
+     */
+    public int calculateMonthlyTotal(List<Lesson> lessons, YearMonth month) {
+        if (this.feePerLesson <= 0) {
+            return 0;
+        }
+
+        int totalLessons = 0;
+        for (seedu.tutorswift.Lesson lesson : lessons) {
+            totalLessons += countOccurrences(lesson.getDay(), month);
+        }
+        return totalLessons * this.feePerLesson;
+    }
+    /**
+     * Counts the number of times a specific {@code DayOfWeek} occurs within the given month.
+     *
+     * @param day The {@code DayOfWeek} to count (e.g., TUESDAY).
+     * @param month The {@code YearMonth} to search within.
+     * @return The total number of instances of the specified day within the month.
+     */
+    private int countOccurrences(DayOfWeek day, YearMonth month) {
+        LocalDate firstOfMonth = month.atDay(1);
+        LocalDate lastOfMonth = month.atEndOfMonth();
+        int count = 0;
+
+        // Find the first occurrence of the day in the month
+        LocalDate date = firstOfMonth.with(TemporalAdjusters.nextOrSame(day));
+
+        // Count every instance until the end of the month
+        while (!date.isAfter(lastOfMonth)) {
+            count++;
+            date = date.plusWeeks(1);
+        }
+        return count;
     }
 }
