@@ -44,7 +44,7 @@ Given below are my contributions to the project.
 * **What it does:** Introduces automated financial reporting by calculating individual student fees and aggregate monthly income based on existing lesson schedules.
 * **Justification:** Previously, users had to manually calculate revenue by cross-referencing lesson schedules against physical or digital calendars. This was time-consuming and prone to human error, particularly when accounting for months with differing numbers of weekdays (e.g., a month with 4 vs. 5 Mondays). This enhancement eliminates the need for manual calendar lookups, providing 100% accurate, automated billing summaries.
 * **Highlights:** * Implemented dynamic lesson occurrence counting using Java's `TemporalAdjusters`, which programmatically determines the number of billable lessons for any given month, removing all reliance on manual calendar verification.
-* **Link:** [PR #151](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/151)
+* **Link:** [PR #154](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/154)
 ---
 
 #### Code Contributed: [RepoSense link](https://nus-cs2113-ay2526-s2.github.io/tp-dashboard/?search=matheuczx&breakdown=true)
