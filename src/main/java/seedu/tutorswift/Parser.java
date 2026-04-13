@@ -20,6 +20,8 @@ import seedu.tutorswift.command.UnpaidCommand;
 import seedu.tutorswift.command.UpcomingCommand;
 import seedu.tutorswift.command.RemoveGradeCommand;
 import seedu.tutorswift.command.RemoveRemarkCommand;
+import seedu.tutorswift.command.MonthlyIncomeCommand;
+import seedu.tutorswift.command.FeeSummaryCommand;
 
 import java.time.YearMonth;
 import java.time.DayOfWeek;
@@ -133,6 +135,10 @@ public class Parser {
             return parseRemoveGrade(arguments);
         case "remove-remark":
             return parseRemoveRemark(arguments);
+        case "fee-summary":
+            return parseFeeSummary(arguments);
+        case "monthly-income":
+            return parseMonthlyIncome(arguments);
         default:
             throw new TutorSwiftException("I'm sorry, but I don't know what '"
                     + userInput + "' means :(\n" + USAGE_GUIDE);
@@ -525,5 +531,28 @@ public class Parser {
         } catch (Exception e) {
             throw new TutorSwiftException("Invalid year-month. Use ym/YYYY-MM (e.g. ym/2026-03).");
         }
+    }
+
+    private static Command parseFeeSummary(String args) throws TutorSwiftException {
+        if (args.trim().isEmpty()) {
+            throw new TutorSwiftException("Usage: fee-summary INDEX ym/YYYY-MM");
+        }
+
+        // Reuse your existing index parser
+        int index = parseIndexFromArgs(args);
+
+        // Reuse your existing YearMonth parser
+        YearMonth month = parseYearMonth(args);
+
+        return new FeeSummaryCommand(index, month);
+    }
+
+    private static Command parseMonthlyIncome(String args) throws TutorSwiftException {
+        if (args.trim().isEmpty()) {
+            throw new TutorSwiftException("Usage: monthly-income ym/YYYY-MM");
+        }
+        // Only parse the YearMonth prefix, skip index parsing
+        YearMonth month = parseYearMonth(args);
+        return new MonthlyIncomeCommand(month);
     }
 }

@@ -294,6 +294,31 @@ public class Ui {
         System.out.println("Got it! I've scheduled a lesson for " + studentName + " on " + lesson);
         System.out.println(LINE_DIVIDER);
     }
+    /**
+     * Displays the fee summary report for a specific student for a given month.
+     * @param student The {@code Student} whose fees are being summarized.
+     * @param month The {@code YearMonth} for which the fee calculation was performed.
+     * @param total The total calculated fee amount due for the student in that month.
+     */
+    public void showFeeSummary(Student student, YearMonth month, int total) {
+        System.out.println("----------------------------------");
+        System.out.println("Fee Summary for: " + student.getName());
+        System.out.println("Month: " + month.getMonth() + " " + month.getYear());
+        System.out.println("Total Amount Due: $" + total);
+        System.out.println("----------------------------------");
+    }
+
+    /**
+     * Displays the total income earned for a specific month across all active students.
+     * @param month The {@code YearMonth} representing the report period.
+     * @param total The aggregated revenue earned from all active students in that month.
+     */
+    public void showMonthlyIncome(YearMonth month, int total) {
+        System.out.println("----------------------------------------------");
+        System.out.println("Monthly Income Report for " + month.getMonth() + " " + month.getYear());
+        System.out.println("Total Revenue: $" + total);
+        System.out.println("----------------------------------------------");
+    }
 
     /**
      * Shows the exit message when the program ends.
