@@ -33,6 +33,9 @@ Here is the TutorSwift usage guide:
   bye            - Exits the application
 ____________________________________________________________
 ____________________________________________________________
+The character '|' is reserved for system use
+____________________________________________________________
+____________________________________________________________
  Got it. I've added this student:
     Alice Lim | Secondary 3 | Math | Fee: Not set | No payments recorded
  Now you have 1 students in the list.

@@ -1,4 +1,5 @@
 invalid command
+|
 add n/Alice Lim l/Secondary 3 sub/Math
 add n/Bob Tan l/Primary 5 sub/Science
 list
@@ -7,7 +8,7 @@ remark 1 r/Needs help with algebra
 fee 1 f/50
 paid 1 ym/2026-04
 unpaid 1 ym/2026-04
-schedule n/Alice Lim day/MONDAY start/15:00 end/17:00
+schedule 1 day/MONDAY start/15:00 end/17:00
 grade 1 m/Midterm g/85
 remove-grade 1 m/Midterm
 remove-remark 1
