@@ -9,7 +9,7 @@ Given below are my contributions to the project.
 
 ---
 
-### Summary of Contributions
+## Summary of Contributions
 
 ---
 
@@ -29,13 +29,22 @@ Given below are my contributions to the project.
   * **Design:** Implemented by modifying the `Parser` to support prefix-based arguments and adding a filtering method in `StudentList` to aggregate results.
 * **Link:** [PR #44](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/44)
 
+### Enhancements to existing features
+
 #### `add` duplicate student prevention
 * **What it does:** Prevents the addition of students with the same name (case-insensitive) to ensure data integrity.
 * **Justification:** Prevents accidental creation of duplicate records, which could lead to billing or scheduling errors.
 * **Highlights:** * Introduced a validation check in `AddCommand#execute` that queries the `StudentList` before allowing the addition.
-  * Implemented `StudentList#hasStudentWithName` for efficient duplicate detection.
-  * Added a custom `TutorSwiftException` to provide clear, actionable feedback to the user via the `Ui` class.
-* **Link:** [PR #107](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/107)
+  * Implemented `StudentList.hasStudentWithName()` for efficient duplicate detection.
+* **Link:** [PR #151](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/151)
+
+### Enhancements to existing features
+
+#### `fee-summary` and `monthly-income` financial reporting
+* **What it does:** Introduces automated financial reporting by calculating individual student fees and aggregate monthly income based on existing lesson schedules.
+* **Justification:** Previously, users had to manually calculate revenue by cross-referencing lesson schedules against physical or digital calendars. This was time-consuming and prone to human error, particularly when accounting for months with differing numbers of weekdays (e.g., a month with 4 vs. 5 Mondays). This enhancement eliminates the need for manual calendar lookups, providing 100% accurate, automated billing summaries.
+* **Highlights:** * Implemented dynamic lesson occurrence counting using Java's `TemporalAdjusters`, which programmatically determines the number of billable lessons for any given month, removing all reliance on manual calendar verification.
+* **Link:** [PR #151](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/151)
 ---
 
 #### Code Contributed: [RepoSense link](https://nus-cs2113-ay2526-s2.github.io/tp-dashboard/?search=matheuczx&breakdown=true)
@@ -49,6 +58,7 @@ Given below are my contributions to the project.
 
 **Enhancements to existing features:**
 - Add duplicate handling for existing`add student` feature to resolve major bug raised in PE-D(Pull requests [#107](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/107))
+- Added automated fee-summary and monthly-income features to resolve the pain point of manual revenue calculation raised by PE-D issue [#137](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/137)
 
 ---
 **Community:**
@@ -59,7 +69,7 @@ Given below are my contributions to the project.
 ### Documentation:
 
 **User Guide:**
-- Added documentation for features`find` and `list` commands [#104](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/104),[#86](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/86)
+- Added documentation for features`find`, `list`, `fee-summary` and `monthly-income` commands [#104](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/104),[#86](https://github.com/AY2526S2-CS2113-W11-1/tp/pull/86)
 ---
 
 **Developer Guide:**
@@ -86,6 +96,6 @@ Given below are my contributions to the project.
 
 **Contributions beyond project team:**
 - Guided team members on usage of PlantUML for sequence diagrams
-- Work with Yi Feng to ideate and convert initial user stories and product features into issues for v1.0
-- Come out with more exciting ideas (e.g class scheduling) for v2.0. 
+- Work with Yi Feng to ideate and convert initial user stories and product features into issues for v1.0.
+- Generate more exciting ideas (e.g class scheduling, financial tracking) for v2.0. 
 ---
